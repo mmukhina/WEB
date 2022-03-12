@@ -2,6 +2,7 @@ from flask import Flask, url_for, request
 
 app = Flask(__name__)
 
+@app.route('/')
 @app.route('/carousel')
 def promotion_image():
     return f"""<!doctype html>
@@ -53,7 +54,6 @@ def promotion_image():
 
 
 
-@app.route('/')
 @app.route('/main')
 def main():
     return "Миссия Колонизация Марса"
