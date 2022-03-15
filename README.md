@@ -1,1 +1,1 @@
-<h1> WEB </h1>
+<h1>Online Chess</h1>
