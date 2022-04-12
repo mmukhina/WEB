@@ -1,0 +1,59 @@
+body {
+    background-color: rgb(30,30,30);
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.chess-board { border-spacing: 0; border-collapse: collapse; }
+            .chess-board th { padding: .5em; }
+            .chess-board td { border: 1px solid; width: 2em; height: 2em; }
+            .chess-board .light { background: #eee; }
+            .chess-board .dark { background: #000; }
+
+
+.btn-group {
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+
+}
+
+.btn-group th{
+    padding: 5px;
+    color: white;
+}
+
+.btn-group button{
+    margin: 0;
+    padding: 2px;
+    
+}
+
+@media screen and (min-width: 800px) {
+    .btn-group button {
+        width: 65px;
+        height: 65px
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+    .btn-group button {
+        width: 50px;
+        height: 50px
+    }
+}
+
+
+.white {
+    background-color: white;
+}
+
+
+
+.black {
+    background-color: black;
+}

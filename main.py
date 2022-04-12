@@ -1,62 +1,69 @@
-from flask import Flask, url_for, request
+from flask import Flask, url_for, request, render_template
+import json
 
 app = Flask(__name__)
 
+black = {"A1":"", "A2": "", "A3": "", "A4": "", "A5": "", "A6": "", "A7": "pawnb", "A8": "rookb",
+         "B1":"", "B2": "", "B3": "", "B4": "", "B5": "", "B6": "", "B7": "pawnb", "B8": "knightb",
+         "C1":"", "C2": "", "C3": "", "C4": "", "C5": "", "C6": "", "C7": "pawnb", "C8": "bishopb",
+         "D1":"", "D2": "", "D3": "", "D4": "", "D5": "", "D6": "", "D7": "pawnb", "D8": "queenb",
+         "E1":"", "E2": "", "E3": "", "E4": "", "E5": "", "E6": "", "E7": "pawnb", "E8": "kingb",
+         "F1":"", "F2": "", "F3": "", "F4": "", "F5": "", "F6": "", "F7": "pawnb", "F8": "bishopb",
+         "G1":"", "G2": "", "G3": "", "G4": "", "G5": "", "G6": "", "G7": "pawnb", "G8": "knightb",
+         "H1":"", "H2": "", "H3": "", "H4": "", "H5": "", "H6": "", "H7": "pawnb", "H8": "rookb"}
+
+white = {"A1":"rookw", "A2": "pawnw", "A3": "", "A4": "", "A5": "", "A6": "", "A7": "", "A8": "",
+         "B1":"knightw", "B2": "pawnw", "B3": "", "B4": "", "B5": "", "B6": "", "B7": "", "B8": "",
+         "C1":"bishopw", "C2": "pawnw", "C3": "", "C4": "", "C5": "", "C6": "", "C7": "", "C8": "",
+         "D1":"queenw", "D2": "pawnw", "D3": "", "D4": "", "D5": "", "D6": "", "D7": "", "D8": "",
+         "E1":"kingw", "E2": "pawnw", "E3": "", "E4": "", "E5": "", "E6": "", "E7": "", "E8": "",
+         "F1":"bishopw", "F2": "pawnw", "F3": "", "F4": "", "F5": "", "F6": "", "F7": "", "F8": "",
+         "G1":"knightw", "G2": "pawnw", "G3": "", "G4": "", "G5": "", "G6": "", "G7": "", "G8": "",
+         "H1":"rookw", "H2": "pawnw", "H3": "", "H4": "", "H5": "", "H6": "", "H7": "", "H8": ""}
+
 @app.route('/')
-@app.route('/carousel')
-def promotion_image():
-    return f"""<!doctype html>
-                <html lang="en">
-                  <head>
-                    <meta charset="utf-8">
-                    <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-                    <title>Пейзажи Марса</title>
-                  </head>
-                  <body>
-                  <center>
-                  <h1>Пейзажи Марса</h1>
-                  <div class="w-75 h-75" style="padding-top:30px">
-                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                      <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                      </ol>
-                      <div class="carousel-inner">
-                        <div class="carousel-item active">
-                          <img class="d-block w-100 h-100" src="static/img/1.jpg" alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                          <img class="d-block w-100 h-100" src="static/img/2.jpg" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                          <img class="d-block w-100 h-100" src="static/img/3.jpg" alt="Third slide">
-                        </div>
-                      </div>
-                      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </div>
+def index():
+    return render_template('index.html')
 
-                  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-                  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-                  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-                  </div>
-                  </center>
-                  </body>
-                </html>"""
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
-
+@app.route('/register')
+def register():
+    if request.method == 'GET':
+            return render_template('register.html')
+        
+    elif request.method == 'POST':
+        print(request.form['surname'])
+        print(request.form['name'])
+        print(request.form['email'])
+        print(request.form['class'])
+        print(request.form['file'])
+        print(request.form['about'])
+        print(request.form['sex'])
+        print(request.form.get('prof1'))
+        print(request.form.get('prof2'))
+        print(request.form.get('prof3'))
+        print(request.form.get('prof4'))
+        print(request.form.get('prof5'))
+        print(request.form.get('prof6'))
+        print(request.form.get('prof7'))
+        print(request.form.get('prof8'))
+        print(request.form.get('accept'))
+        return "redirect to login"
 
 @app.route('/main')
 def main():
-    return "Миссия Колонизация Марса"
+    return render_template('main.html', black=black, white=white)
+
+
+@app.route('/test', methods=['POST'])
+def test():
+    output = request.get_json()
+    result = json.loads(output)
+    print(result)
+    return result
 
 
 if __name__ == '__main__':
