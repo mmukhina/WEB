@@ -1,9 +1,9 @@
 body{
-    background-color: rgb(25,25,25);
+    background-color: #0C0032;
     height: 100%;
     width: 100%;
     margin: 0;
-    font-family: "Roboto";
+    font-family: sans-serif;
 }
 
 li{
@@ -17,6 +17,7 @@ li{
     width: 28%;
     transform: translate(-50%, -50%);
 }
+
 @media screen and (min-width: 800px) {
     .main_image{
         display: block;
@@ -45,12 +46,12 @@ h1{
 
 button{
     border-radius: 5px;
-    background-color: white;
-    color: black;
+    background-color: #3500D3;
+    color: #C5C6C7;
     transition-duration: 0.9s;
     border: 0;
-    border: 3px solid black;
-    width: 25%;
+    border: 3px solid #190061;
+    width: 30%;
     height: 50px;
     font-size: 110%;
     margin-bottom:  8%;
@@ -59,9 +60,9 @@ button{
 }
 
 button:hover{
-    background-color: black;
+    background-color: #240090;
     color: white;
-    border: 3px solid  white;
+    box-shadow: 10px 10px white;
 }
 
 
