@@ -1,1 +1,41 @@
-<h1>h1</h1>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/css/style4.css">
+    <link rel="icon" href="../static/img/logo.png" type="image/icon type">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="box">
+        <h1>Войти</h1>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div>
+                <div class="label">{{ form.username.label }}</div>
+                {{ form.username(class="info") }}
+                {% for error in form.username.errors %}
+                <div class="message" role="alert">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div>
+                <div class="label">{{ form.password.label }}</div>
+                {{ form.password(class="info", type="password") }}
+                {% for error in form.password.errors %}
+                <div class="message" role="alert">
+                    {{ error }}
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <div>{{ form.submit(type="submit", class="submit") }}</div>
+        </form>
+    </div>
+
+</body>
+
+</html>

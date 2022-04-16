@@ -1,7 +1,36 @@
-from flask import Flask, url_for, request, render_template
+from flask import Flask, url_for, request, render_template, redirect, send_from_directory
 import json
+import psycopg2
+from werkzeug.utils import secure_filename
+import os
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired, EqualTo
+#from datatbase import *
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
+class LoginForm(FlaskForm):
+    username = StringField('Логин', validators=[DataRequired(message="Введите логин")])
+    password = PasswordField('Пароль', validators=[DataRequired(message="Введите пароль")])
+    submit = SubmitField('Войти')
+
+
+def my_check(form, field):
+    database_list = database("register")
+    if field.data in database_list:
+        raise ValidationError("Этот логин уже занят!")
+    
+class RegisterForm(FlaskForm):
+    username = StringField('Логин', validators=[DataRequired(message="Введите логин"), my_check])
+    password = PasswordField('Пароль', validators=[DataRequired(message="Введите пароль")])
+    password_rep = PasswordField('Пароль', validators=[DataRequired(message="Введите пароль"),EqualTo('password', message='Пароли не совпадают')])
+    checkbox = BooleanField("Я соглашаюсь на обработку персональных данных", validators=[DataRequired(message="Необходимое поле")])
+    submit = SubmitField('Войти')
+
+    
+
 
 black = {"A1":"", "A2": "", "A3": "", "A4": "", "A5": "", "A6": "", "A7": "pawnb", "A8": "rookb",
          "B1":"", "B2": "", "B3": "", "B4": "", "B5": "", "B6": "", "B7": "pawnb", "B8": "knightb",
@@ -21,49 +50,99 @@ white = {"A1":"rookw", "A2": "pawnw", "A3": "", "A4": "", "A5": "", "A6": "", "A
          "G1":"knightw", "G2": "pawnw", "G3": "", "G4": "", "G5": "", "G6": "", "G7": "", "G8": "",
          "H1":"rookw", "H2": "pawnw", "H3": "", "H4": "", "H5": "", "H6": "", "H7": "", "H8": ""}
 
+
+def database(state, info=None):
+    host = "ec2-3-209-61-239.compute-1.amazonaws.com"
+    name = "dbu1marqhos8n6"
+    user = "qybkrxdzbfsmnq"
+    password = "4abdee2cf19e5e24290e8b6f813fa91c9fded73e4ac639b3994bd3acf2f77bdb"
+
+    try:
+        conn = psycopg2.connect(dbname = name, user = user, password = password, host = host)
+        cur = conn.cursor()
+    except Exception:
+        state = "error"
+
+    if state == "register":
+        cur.execute("SELECT name FROM users;")
+        result = cur.fetchall()[0]
+        
+    elif state == "login":
+        cur.execute("SELECT name, password FROM users WHERE name = '{}';".format(info[0]))
+        result = cur.fetchall()
+        if result == []:
+            return "error"
+
+    elif state == "insert": 
+        cur.execute("INSERT INTO users(name, password, picture) VALUES ('{}', '{}', 'dafault.png')".format(info[0], info[1]))
+        conn.commit()
+        result = "success"
+        
+    elif state == "error":
+        return "no_in"
+        
+    cur.close()
+
+    conn.close()
+
+    return result
+    
+    
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
 
-@app.route('/register')
-def register():
-    if request.method == 'GET':
-            return render_template('register.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = request.form['username']
+        password = request.form['password']
+        state = "login"
         
-    elif request.method == 'POST':
-        print(request.form['surname'])
-        print(request.form['name'])
-        print(request.form['email'])
-        print(request.form['class'])
-        print(request.form['file'])
-        print(request.form['about'])
-        print(request.form['sex'])
-        print(request.form.get('prof1'))
-        print(request.form.get('prof2'))
-        print(request.form.get('prof3'))
-        print(request.form.get('prof4'))
-        print(request.form.get('prof5'))
-        print(request.form.get('prof6'))
-        print(request.form.get('prof7'))
-        print(request.form.get('prof8'))
-        print(request.form.get('accept'))
-        return "redirect to login"
+        check = database(state, [username])
+        if check == "no_in":
+            form.password.errors.append("Проверьте подключение к интернетy")
+        elif check != "error" and check[0][1] == password:
+            return redirect(url_for('main'))
+        else:
+            form.password.errors.append("Проверьте логин или пароль")
+
+    return render_template('login.html', form=form)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        username = request.form['username']
+        password = request.form['password']
+
+        insert = database("insert", [username, password])
+        
+        if insert == "no_in":
+            form.password.errors.append("Проверьте подключение к интернетy")
+        elif insert == "success":
+            return redirect(url_for('login'))
+
+    return render_template('register.html', form=form)
+
+
 
 @app.route('/main')
 def main():
     return render_template('main.html', black=black, white=white)
 
-
+"""
 @app.route('/test', methods=['POST'])
 def test():
     output = request.get_json()
     result = json.loads(output)
     print(result)
-    return result
+    return result"""
 
 
 if __name__ == '__main__':

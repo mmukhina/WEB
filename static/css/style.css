@@ -1,9 +1,9 @@
 body{
-    background-color: #0C0032;
+    background-color: #222831;
     height: 100%;
     width: 100%;
     margin: 0;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 li{
@@ -45,24 +45,24 @@ h1{
 }
 
 button{
-    border-radius: 5px;
-    background-color: #3500D3;
-    color: #C5C6C7;
-    transition-duration: 0.9s;
-    border: 0;
-    border: 3px solid #190061;
+    border-radius: 4px;
+    background-color: #222831;
+    color: #FF5722;
+    transition-duration: 0.3s;
+    border: 3px solid #EEEEEE;
     width: 30%;
     height: 50px;
     font-size: 110%;
     margin-bottom:  8%;
     margin-top: 2%;
+    min-width: 200px;
     
 }
 
 button:hover{
-    background-color: #240090;
-    color: white;
-    box-shadow: 10px 10px white;
+    background-color: #EEEEEE;
+    color: #FF5722;
+    box-shadow: 8px 8px #FF5722;
 }
 
 

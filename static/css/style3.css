@@ -1,241 +1,315 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-*,
-*:after,
-*:before {
-    box-sizing: border-box;
-}
-
 body {
-    background: #2E3047;
-    color: #363538;
-    font-size: 1.5em;
+    background: #222831;
     font-family: sans-serif;
-    font-weight: 100;
-    text-align: center;
 }
 
-.container {
-    background: #F6F6F6;
-    color: #363538;
-    display: inline-block;
-    padding: 0em 2em;
-    margin: 6em auto;
-    box-shadow: 0 100px 100px rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
+body fieldset {
+    box-shadow: 0 8px 10px black;
 }
 
-.container .navigation {
-    text-align: left;
+body.error {
+    background: #222831;
 }
 
-.container .navigation ol {
-    list-style: none;
-    background: #F6F6F6;
+body.error fieldset {
+    box-shadow: 0 8px 8px #222831;
+}
+
+h1,
+h2 {
     position: absolute;
-    padding: 30px 0;
-    width: 600px;
-    z-index: 100;
-    margin-bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-.container .navigation ol li {
-    display: inline-block;
-    margin-right: 27px;
-    font-size: 0.7em;
-    max-width: 20%;
-    text-align: left;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+h1 {
+    top: 24px;
+    color: white;
+    font-size: 12px;
 }
 
-.container .navigation ol li a {
-    color: #363538;
-    text-decoration: none;
-    position: relative;
-    z-index: 2;
+h2 {
+    top: 44px;
+    color: #EEEEEE;
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+ul.items {
+    position: absolute;
+    width: 30px;
+    height: auto;
+    top: 50%;
+    left: -60px;
+    transform: translateY(-50%);
+}
+
+ul.items li {
+    width: 8px;
+    height: 8px;
+    margin: 10px 0;
+    background: #EEEEEE;
+    border-radius: 50%;
+    opacity: 0.4;
     cursor: pointer;
-    opacity: 0;
 }
 
-.container .navigation ol li a.done {
+ul.items li.active {
     opacity: 1;
 }
 
-.container .sign-form {
-    width: 600px;
-    text-align: left;
-    margin: 85px 0 0 0;
-}
-
-.container .sign-form #next-page {
-    opacity: 0;
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 20px;
-    background: url("https://jdniki.github.io/signup/images/next-page.svg");
-    background-size: contain;
-}
-
-.container .sign-form #next-page:hover {
-    background: url("https://jdniki.github.io/signup/images/next-pagehover.svg");
-    background-size: contain;
-}
-
-.container .sign-form .questions {
-    list-style: none;
-    -webkit-transition: height 0.4s;
-    transition: height 0.4s;
-    width: 88%;
-    display: inline-block;
-    height: 80px;
-}
-
-.container .sign-form .questions li {
+form {
     position: absolute;
-    width: 500px;
-    /*-------------Password ------------------*/
+    width: 300px;
+    height: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.container .sign-form .questions li span {
-    display: block;
-    margin-bottom: 10px;
+form fieldset {
+    position: absolute;
+    width: 300px;
+    height: 60px;
+    background: #EEEEEE;
+    border-radius: 3px;
+    opacity: 0;
+    transform: scale(0.2);
+    transition: all 0.4s ease-in-out;
 }
 
-.container .sign-form .questions li input {
-    width: 100%;
-    font-size: 0.9em;
-    color: rgb(0, 0, 0);
-    margin: 0.3em 0 1em 0;
+form fieldset input,
+form fieldset p {
+    display: inline-block;
+    width: 200px;
+    margin-left: 50px;
+    color: #333333;
+    font-size: 16px;
+    letter-spacing: 1px;
+    background: #EEEEEE;
+}
+
+form fieldset p {
+    margin-top: 22px;
+    text-align: center;
+}
+
+form fieldset input {
+    height: 40px;
+    margin-top: 8px;
     border: none;
-    background: none;
-    border-bottom: 3px solid #408697;
-    padding: 0.5em 0.1em;
-    transition: all 0.5s ease;
-}
-
-.container .sign-form .questions li input:focus {
     outline: none;
-    border-bottom: 3px solid #52D6F4;
 }
 
-.container .sign-form .questions li:not(:first-child) {
-    opacity: 0;
-    margin-top: 150px;
-}
-
-.container .sign-form .questions li #viewpswd {
+form fieldset .icon {
     position: absolute;
-    opacity: 0;
+    width: 30px;
+    height: 30px;
+    top: 15px;
+    transition: all 0.4s ease;
 }
 
-.container .sign-form .questions li #show-pwd {
-    margin: -2.75em 0em;
-    width: 40px;
-    height: 40px;
+form fieldset .icon i {
     position: absolute;
-    right: 0;
-    color: rgba(255, 255, 255, 0.4);
+    display: block;
+}
+
+form fieldset .icon i::before,
+form fieldset .icon i::after {
+    position: absolute;
+    content: "";
+}
+
+form fieldset .icon.left {
+    left: 10px;
+}
+
+form fieldset .icon.right {
+    right: 10px;
     cursor: pointer;
 }
 
-.container .sign-form .questions li #show-pwd.view {
-    background: url("https://jdniki.github.io/signup/images/view.svg");
-    background-size: contain;
+form fieldset .icon.button:hover {
+    border-radius: 4px;
+    transition: all 0.4s ease;
+    
+    
 }
 
-.container .sign-form .questions li #show-pwd.hide {
-    background: url("../img/hide.png");
-    background-size: contain;
+form fieldset.enable {
+    z-index: 1;
+    opacity: 1;
+    transition: all 0.5s ease-out 0.2s;
+    transform: scale(1);
+    animation: enable 0.5s ease-out 0.2s;
 }
 
-.container .sign-form .questions li #show-pwd:active,
-.container .sign-form .questions li #show-pwd:focus {
-    background: url("https://jdniki.github.io/signup/images/hide.svg");
-    background-size: contain;
+form fieldset.disable {
+    opacity: 0;
+    transition: all 0.3s ease-in;
+    transform: translateY(120px) scale(0.9);
 }
 
-.container .sign-form .questions li select.country {
-    position: absolute;
-    width: 4.5em;
-    font-size: 0.7em;
-    color: #F6F6F6;
-    height: 70px;
-    background: transparent;
-    border: 1px solid black;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: none;
+body.error fieldset {
+    transform-origin: 50% 100%;
+    animation: error 0.3s ease-out;
 }
 
-.container .sign-form .questions li #phone {
-    padding-left: 5em;
-}
-
-.container .error-message {
-    color: rgba(207, 0, 0, 0.56);
-    font-size: 14px;
-    margin-top: 10px;
-    padding-bottom: 30px;
-    background: #F6F6F6;
-}
-
-::-webkit-input-placeholder {
-    font-size: 0.9em;
-    color: #8D8C8A;
-}
-
-:-moz-placeholder {
-    /* Firefox 18- */
-    font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-::-moz-placeholder {
-    /* Firefox 19+ */
-    font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-:-ms-input-placeholder {
-    font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-@-webkit-keyframes moveUpFromDown {
-    from {
-        -webkit-transform: translateY(100%);
+@keyframes enable {
+    0% {
+        opacity: 0;
+        transform: scale(0.2);
     }
 
-    to {
-        -webkit-transform: translateY(0);
+    60% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
     }
 }
 
-@keyframes moveUpFromDown {
-    from {
-        -webkit-transform: translateY(100%);
-        transform: translateY(100%);
+@keyframes error {
+
+    0%,
+    50%,
+    100% {
+        transform: rotate(0deg);
     }
 
-    to {
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
+    25% {
+        transform: rotate(-3deg);
+    }
+
+    75% {
+        transform: rotate(3deg);
     }
 }
 
-.enter{
-    text-decoration: none;
-    color: #408697;
+/**
+ * * Icons in CSS, long as f****
+ * */
+.icon .arrow {
+    width: 2px;
+    height: 17px;
+    top: 5px;
+    left: 14px;
+    background: #FF5722;
 }
 
-.enter:hover{
-    color: #52D6F4;
+.icon .arrow::before {
+    width: 6px;
+    height: 6px;
+    bottom: -1px;
+    left: -3px;
+    border-color: #FF5722;
+    border-right: 2px solid #FF5722;
+    border-bottom: 2px solid #FF5722;
+    transform: rotate(45deg);
+}
+
+
+
+.icon .user {
+    width: 20px;
+    height: 10px;
+    bottom: 5px;
+    left: 5px;
+    box-shadow: 0 0 0 2px #333333 inset;
+    border-radius: 6px 6px 3px 3px;
+}
+
+.icon .user::before {
+    width: 10px;
+    height: 10px;
+    top: -9px;
+    left: 5px;
+    box-shadow: 0 0 0 2px #333333 inset;
+    border-radius: 50%;
+}
+
+.icon .letter {
+    width: 20px;
+    height: 12px;
+    top: 9px;
+    left: 5px;
+    box-shadow: 0 0 0 2px #333333 inset;
+    border-radius: 3px;
+}
+
+.icon .letter::before,
+.icon .letter::after {
+    width: 11px;
+    height: 2px;
+    top: 4px;
+    background: #222831;
+}
+
+.icon .letter::before {
+    left: 0;
+    transform: rotate(30deg);
+}
+
+.icon .letter::after {
+    right: 0;
+    transform: rotate(-30deg);
+}
+
+.icon .lock {
+    width: 20px;
+    height: 16px;
+    top: 9px;
+    left: 5px;
+    box-shadow: 0 0 0 2px #333333 inset;
+    border-radius: 3px;
+}
+
+.icon .lock::before {
+    width: 8px;
+    height: 8px;
+    top: -4px;
+    left: 4px;
+    border: 2px solid transparent;
+    border-top: 2px solid #333333;
+    border-right: 2px solid #333333;
+    border-radius: 50%;
+    transform: rotate(-45deg);
+}
+
+.icon .lock::after {
+    width: 6px;
+    height: 7px;
+    top: 4px;
+    left: 7px;
+    box-shadow: 0 0 0 2px #333333 inset;
+}
+
+.icon .heart {
+    width: 10px;
+    height: 10px;
+    top: 11px;
+    left: 7px;
+    background: #ff5233;
+    transform: rotate(45deg);
+}
+
+.icon .heart::before,
+.icon .heart::after {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ff5233;
+}
+
+.icon .heart::before {
+    left: -6px;
+}
+
+.icon .heart::after {
+    top: -6px;
 }
