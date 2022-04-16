@@ -1,15 +1,12 @@
 from flask import Flask, url_for, request, render_template, redirect, send_from_directory
 import json
 import psycopg2
-from werkzeug.utils import secure_filename
-import os
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, EqualTo
-#from datatbase import *
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+#app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 class LoginForm(FlaskForm):
     username = StringField('Логин', validators=[DataRequired(message="Введите логин")])
