@@ -1,0 +1,57 @@
+.back {
+    background-color: #222831;
+}
+
+.menu {}
+
+.menu a {
+    color: #EEEEEE;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+}
+
+.menu a:hover {
+    color: #FF5722;
+}
+
+.menu a.active {
+    color: #FF5722;
+}
+
+.btn {
+    float: right;
+    margin-top: 12px;
+    margin-right: 5px;
+}
+
+.offcanvas-header {
+    background-color: #2D4059;
+}
+
+.offcanvas-body {
+    background-color: #2D4059;
+}
+
+
+#offcanvasRightLabel{
+    color: #EEEEEE;
+    font-size: 40px;
+}
+
+h1{
+    color: #EEEEEE;
+}
+
+.box{
+    background-color: #2D4059;
+    box-shadow: 0 0 25px;
+    width: 80%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    margin-top: 50px;
+    border-radius: 4px;
+}
+
+
