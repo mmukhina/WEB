@@ -54,8 +54,11 @@ def database(state, info=None):
     user = "qybkrxdzbfsmnq"
     password = "4abdee2cf19e5e24290e8b6f813fa91c9fded73e4ac639b3994bd3acf2f77bdb"
 
+    DATABASE_URL = os.environ['DATABASE_URL']
+
     try:
-        conn = psycopg2.connect(dbname = name, user = user, password = password, host = host)
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        #conn = psycopg2.connect(dbname = name, user = user, password = password, host = host)
         cur = conn.cursor()
     except Exception:
         state = "error"
@@ -133,13 +136,16 @@ def register():
 def main():
     return render_template('main.html', black=black, white=white)
 
-"""
-@app.route('/test', methods=['POST'])
-def test():
-    output = request.get_json()
-    result = json.loads(output)
-    print(result)
-    return result"""
+@app.route('/profile')
+def profile():
+    win = 40
+    lose = 50
+    draw = 60
+    return render_template('profile.html', win=win, lose=lose, draw=draw)
+
+@app.route('/facts')
+def facts():
+    return render_template('facts.html')
 
 
 if __name__ == '__main__':

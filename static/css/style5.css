@@ -1,3 +1,11 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: sans-serif;
+}
+
 .back {
     background-color: #222831;
 }
@@ -34,24 +42,32 @@
 }
 
 
-#offcanvasRightLabel{
+#offcanvasRightLabel {
     color: #EEEEEE;
     font-size: 40px;
 }
 
-h1{
+h1 {
     color: #EEEEEE;
 }
 
-.box{
-    background-color: #2D4059;
-    box-shadow: 0 0 25px;
-    width: 80%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    margin-top: 50px;
+.box {
+    color: #EEEEEE;
+    display: block;
+    box-shadow: 0 0 25px black;
     border-radius: 4px;
+    background-color: #2D4059;
+    margin-top: 7%;
+    margin-bottom: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 2%;
+
 }
 
+.structure {
+    
+}
 
+.search{
+}
