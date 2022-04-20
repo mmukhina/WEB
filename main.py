@@ -49,16 +49,10 @@ white = {"A1":"rookw", "A2": "pawnw", "A3": "", "A4": "", "A5": "", "A6": "", "A
 
 
 def database(state, info=None):
-    host = "ec2-3-209-61-239.compute-1.amazonaws.com"
-    name = "dbu1marqhos8n6"
-    user = "qybkrxdzbfsmnq"
-    password = "4abdee2cf19e5e24290e8b6f813fa91c9fded73e4ac639b3994bd3acf2f77bdb"
-
     DATABASE_URL = os.environ['DATABASE_URL']
 
     try:
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-        #conn = psycopg2.connect(dbname = name, user = user, password = password, host = host)
         cur = conn.cursor()
     except Exception:
         state = "error"
