@@ -1,27 +1,11 @@
-
-.back{
-    background-color: #222831;
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    width: 95%;
-}
-
-
-.title{
-    color: #EEEEEE;
-    text-align: center;
-    margin-bottom: 5%;
-}
-
-p{
+p {
     text-shadow: 0px 0px 4px black;
+    
 }
 
-
-@media screen and (min-width: 1200px) {
-    .title{
-        margin-bottom: 0;
-    }
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
 }

@@ -2,7 +2,7 @@ from flask import Flask, url_for, request, render_template, redirect, send_from_
 import json
 import psycopg2
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, EqualTo
 
 app = Flask(__name__)
@@ -18,12 +18,22 @@ def my_check(form, field):
     database_list = database("register")
     if field.data in database_list:
         raise ValidationError("Этот логин уже занят!")
+
+def my_check_profile(form, field):
+    database_list = database("available")
+    if int(field.data) not in database_list and int(field.data) == 1:
+        raise ValidationError("Этот логин не существует!")
     
 class RegisterForm(FlaskForm):
     username = StringField('Логин', validators=[DataRequired(message="Введите логин"), my_check])
     password = PasswordField('Пароль', validators=[DataRequired(message="Введите пароль")])
     password_rep = PasswordField('Пароль', validators=[DataRequired(message="Введите пароль"),EqualTo('password', message='Пароли не совпадают')])
     checkbox = BooleanField("Я соглашаюсь на обработку персональных данных", validators=[DataRequired(message="Необходимое поле")])
+    submit = SubmitField('Войти')
+
+
+class Search(FlaskForm):
+    username = StringField('ID: ', validators=[DataRequired(message="Введите id"), my_check_profile])
     submit = SubmitField('Войти')
 
     
@@ -49,7 +59,7 @@ white = {"A1":"rookw", "A2": "pawnw", "A3": "", "A4": "", "A5": "", "A6": "", "A
 
 
 def database(state, info=None):
-    DATABASE_URL = os.environ['DATABASE_URL']
+    DATABASE_URL = "postgres://qybkrxdzbfsmnq:4abdee2cf19e5e24290e8b6f813fa91c9fded73e4ac639b3994bd3acf2f77bdb@ec2-3-209-61-239.compute-1.amazonaws.com:5432/dbu1marqhos8n6"
 
     try:
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -58,8 +68,9 @@ def database(state, info=None):
         state = "error"
 
     if state == "register":
-        cur.execute("SELECT name FROM users;")
-        result = cur.fetchall()[0]
+        cur.execute("SELECT name FROM users")
+        temp = cur.fetchall()
+        result = [i[0] for i in temp]
         
     elif state == "login":
         cur.execute("SELECT name, password FROM users WHERE name = '{}';".format(info[0]))
@@ -70,10 +81,39 @@ def database(state, info=None):
     elif state == "insert": 
         cur.execute("INSERT INTO users(name, password, picture) VALUES ('{}', '{}', 'dafault.png')".format(info[0], info[1]))
         conn.commit()
+
+        cur.execute("SELECT id FROM users WHERE name = '{}';".format(info[0]))
+        id_user = cur.fetchall()[0][0]
+        
+        cur.execute("INSERT INTO statistic (user_id) VALUES ({})".format(id_user))
+        conn.commit()
         result = "success"
+
+    elif state == "profile":
+        cur.execute("SELECT id FROM users WHERE name = '{}';".format(info[0]))
+        result = cur.fetchall()[0][0]
+
+    elif state == "profile_data":
+        cur.execute("SELECT win, lose, draw FROM statistic WHERE user_id = '{}';".format(info[0]))
+        result = cur.fetchall()[0]
+
+    elif state == "available":
+        cur.execute("SELECT id FROM users")
+        temp = cur.fetchall()
+        result = [i[0] for i in temp]
+
+    elif state == "admin":
+        cur.execute("SELECT (id, name) FROM users WHERE id != 1")
+        result = [i[0].replace("(", "").replace(")", "").split(",") for i in cur.fetchall()]
+
+        cur.execute("SELECT (win, lose, draw) FROM statistic")
+        result2 = [i[0].replace("(", "").replace(")", "").split(",") for i in cur.fetchall()]
+
+        return [i + result2[ind] for ind, i in enumerate(result)]
         
     elif state == "error":
         return "no_in"
+
         
     cur.close()
 
@@ -101,7 +141,9 @@ def login():
         if check == "no_in":
             form.password.errors.append("Проверьте подключение к интернетy")
         elif check != "error" and check[0][1] == password:
-            return redirect(url_for('main'))
+            if username == "admin":
+                return redirect(url_for('admin'))
+            return redirect(url_for('profile', username=username))
         else:
             form.password.errors.append("Проверьте логин или пароль")
 
@@ -130,16 +172,33 @@ def register():
 def main():
     return render_template('main.html', black=black, white=white)
 
-@app.route('/profile')
-def profile():
-    win = 40
-    lose = 50
-    draw = 60
-    return render_template('profile.html', win=win, lose=lose, draw=draw)
+@app.route('/profile/<username>', methods=['GET', 'POST'])
+def profile(username):
+    form = Search()
+    result_id = database("profile", [username])
+    result_data = database("profile_data", [result_id])
+
+    if form.validate_on_submit():
+        game_name = request.form['username']
+        
+        return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
+                       id_user=result_id, name_user=username, state="true", form=form)
+
+    else:
+        return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
+                           id_user=result_id, name_user=username, state="false", form=form)
+    
+    return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
+                           id_user=result_id, name_user=username, state="none", form=form)
 
 @app.route('/facts')
 def facts():
     return render_template('facts.html')
+
+@app.route('/admin')
+def admin():
+    user_info = database("admin")
+    return render_template('admin.html', user_info=user_info)
 
 
 if __name__ == '__main__':

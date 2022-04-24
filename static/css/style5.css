@@ -1,73 +1,92 @@
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    font-family: sans-serif;
-}
-
-.back {
-    background-color: #222831;
-}
-
-.menu {}
-
-.menu a {
-    color: #EEEEEE;
-    display: block;
-    padding: 12px;
-    text-decoration: none;
-}
-
-.menu a:hover {
-    color: #FF5722;
-}
-
-.menu a.active {
-    color: #FF5722;
-}
-
-.btn {
-    float: right;
-    margin-top: 12px;
-    margin-right: 5px;
-}
-
-.offcanvas-header {
-    background-color: #2D4059;
-}
-
-.offcanvas-body {
-    background-color: #2D4059;
-}
-
-
-#offcanvasRightLabel {
-    color: #EEEEEE;
-    font-size: 40px;
-}
-
-h1 {
-    color: #EEEEEE;
-}
-
 .box {
     color: #EEEEEE;
     display: block;
     box-shadow: 0 0 25px black;
     border-radius: 4px;
     background-color: #2D4059;
-    margin-top: 7%;
-    margin-bottom: auto;
+    margin-top: 5%;
     margin-left: 5%;
     margin-right: 5%;
     padding: 2%;
 
 }
 
-.structure {
+@media screen and (min-width: 700px) {
+    .box{
+        margin-top: 1.5%;
+    }
+}
+
+.bar{
+    width: 250px;
+}
+
+.bar:focus{
+    outline: none;
+}
+
+.submit{
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 4px;
+    background-color: #2D4059;
+    color: #FF5722;
+    transition-duration: 0.3s;
+    border: 3px solid #EEEEEE;
+    height: 30px;
+}
+
+.submit:hover{
+    background-color: #EEEEEE;
+    color: #FF5722;
+    box-shadow: 8px 8px #FF5722;
+}
+
+.info{
+    display: inline-block;
+    vertical-align: middle;
+    border: none;
+    border-radius: 4px;
+    height: 30px;
+}
+
+.info:focus{
+    outline: none;
+}
+
+.label{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#message{
+    color: #FF5722;
+}
+
+.game_btn{
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+}
+
+
+.game_btn button{
+    border-radius: 4px;
+    background-color: #2D4059;
+    color: #FF5722;
+    transition-duration: 0.3s;
+    border: 3px solid #EEEEEE;
+    height: 30px;
     
 }
 
-.search{
+.game_btn button:hover{
+    background-color: #EEEEEE;
+    color: #FF5722;
+    box-shadow: 8px 8px #FF5722;
+}
+
+#new_game{
+    padding-bottom: 25px;
+    padding-right: 25px;
 }

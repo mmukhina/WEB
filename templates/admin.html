@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Profile</title>
+    <meta charset="utf-8">
+
+    <link rel="icon" href="../static/img/logo.png" type="image/icon type">
+    <meta name=viewport content='width=700'>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../static/css/style7.css">
+    <link rel="stylesheet" href="../static/css/menu.css">
+
+</head>
+
+<body>
+    <h1>Панель админа</h1>
+
+    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"></button>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h2 id="offcanvasRightLabel">Меню</h2>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="menu">
+                <a href="login.html">Выйти</a>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Логин</th>
+            <th>Выигрыш</th>
+            <th>Проигрыш</th>
+            <th>Ничья</th>
+        </tr>
+
+        {% for i in user_info %}
+        <tr>
+            <td>{{ i[0] }}</td>
+            <td>{{ i[1] }}</td>
+            <td>{{ i[2] }}</td>
+            <td>{{ i[3] }}</td>
+            <td>{{ i[4] }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body></html>
