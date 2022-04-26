@@ -4,12 +4,14 @@
 <head>
     <title>Profile</title>
     <meta charset="utf-8">
-    
+
     <link rel="icon" href="../static/img/logo.png" type="image/icon type">
     <meta name=viewport content='width=700'>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="../static/css/style5.css">
     <link rel="stylesheet" href="../static/css/menu.css">
 
@@ -17,8 +19,9 @@
 
 <body>
     <h1>Профиль</h1>
-    
-    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"></button>
+
+    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+    </button>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
@@ -27,14 +30,14 @@
         </div>
         <div class="offcanvas-body">
             <div class="menu">
-                <a href="profile.html" class="active">Профиль</a>
-                <a href="facts.html">Интересные факты</a>
-                <a href="rules.html">Правила Игры</a>
-                <a href="login.html">Выйти</a>
+                <a href="https://chess-online-project.herokuapp.com/profile" class="active">Профиль</a>
+                <a href="https://chess-online-project.herokuapp.com/facts">Интересные факты</a>
+                <a href="https://chess-online-project.herokuapp.com/rules">Правила Игры</a>
+                <a href="https://chess-online-project.herokuapp.com/login">Выйти</a>
             </div>
         </div>
     </div>
-    
+
 
     <div class="structure">
         <div class="box">
@@ -51,18 +54,13 @@
                     {{ form.username.label (class="label") }}
                     {{ form.username(class="info") }}
                     {{ form.submit(type="submit", class="submit") }}
-                    
-                    {% if state == "true" %}
-                    <div class="game_btn"><a href="main.html"><button>Перейти к игре</button></a></div>
-                    
-                    {% endif %}
-                    
+
                     {% for error in form.username.errors %}
                     <div id="message" role="alert">{{ error }}</div>
                     {% endfor %}
                 </div>
 
-                
+
             </form>
 
 

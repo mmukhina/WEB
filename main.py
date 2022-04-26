@@ -20,9 +20,9 @@ def my_check(form, field):
         raise ValidationError("Этот логин уже занят!")
 
 def my_check_profile(form, field):
-    database_list = database("available")
-    if int(field.data) not in database_list and int(field.data) == 1:
-        raise ValidationError("Этот логин не существует!")
+    database_list = [str(i) for i in database("available")]
+    if (field.data not in database_list) or (int(field.data) == 1):
+        raise ValidationError("Такой ID не существует!")
     
 class RegisterForm(FlaskForm):
     username = StringField('Логин', validators=[DataRequired(message="Введите логин"), my_check])
@@ -34,7 +34,8 @@ class RegisterForm(FlaskForm):
 
 class Search(FlaskForm):
     username = StringField('ID: ', validators=[DataRequired(message="Введите id"), my_check_profile])
-    submit = SubmitField('Войти')
+    submit = SubmitField('Создать игру')
+
 
     
 
@@ -167,9 +168,20 @@ def register():
     return render_template('register.html', form=form)
 
 
+class Game():
+    def __init__(self):
+        self.list_move = 0
 
-@app.route('/main')
-def main():
+
+
+
+@app.route('/main/<players>', methods=['GET', 'POST'])
+def main(players):
+    if request.method == 'POST':
+        move = json.loads(request.data)
+        if white[move] == "":
+            white[move] = "pawnw"
+            
     return render_template('main.html', black=black, white=white)
 
 @app.route('/profile/<username>', methods=['GET', 'POST'])
@@ -177,23 +189,29 @@ def profile(username):
     form = Search()
     result_id = database("profile", [username])
     result_data = database("profile_data", [result_id])
-
-    if form.validate_on_submit():
-        game_name = request.form['username']
         
-        return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
-                       id_user=result_id, name_user=username, state="true", form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            apponent = request.form['username']
+            if apponent == str(result_id):
+                form.username.errors.append("Это ваш ID")
+            else:
+                return redirect(url_for('main', players=[result_id, int(apponent)]))
 
-    else:
-        return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
-                           id_user=result_id, name_user=username, state="false", form=form)
-    
+        else:
+            return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
+                               id_user=result_id, name_user=username, form=form)
+
     return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
-                           id_user=result_id, name_user=username, state="none", form=form)
+                               id_user=result_id, name_user=username, form=form)
 
 @app.route('/facts')
 def facts():
     return render_template('facts.html')
+
+@app.route('/rules')
+def rules():
+    return render_template('rules.html')
 
 @app.route('/admin')
 def admin():

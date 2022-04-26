@@ -7,13 +7,25 @@
     <meta charset="UTF-8">
     <meta name=viewport content='width=700'>
     <title>Home</title>
+
+    <script>
+        <!--
+        function timedRefresh(timeoutPeriod) {
+            setTimeout("location.reload(true);", timeoutPeriod);
+        }
+
+        window.onload = timedRefresh(2000);
+
+        //   
+
+        -->
+    </script>
 </head>
 
 <body onload='display_images({{ black }}, {{ white }});'>
-
     <table class="btn-group">
         <tbody>
-            
+
             <tr>
                 <th>8</th>
                 <td><button class="white" id="A8" onclick='myfunction(this.id);'></button></td>
@@ -109,7 +121,7 @@
                 <td><button class="black" id="G1" onclick='myfunction(this.id);'></button></td>
                 <td><button class="white" id="H1" onclick='myfunction(this.id);'></button></td>
             </tr>
-            
+
             <tr>
                 <th></th>
                 <th>A</th>
@@ -130,10 +142,9 @@
         function myfunction(clicked) {
             const s = JSON.stringify(clicked); // Stringify converts a JavaScript object or value to a JSON string
             $.ajax({
-                url: "/test",
                 type: "POST",
                 contentType: "application/json",
-                data: JSON.stringify(s)
+                data: s
             });
 
         }
@@ -149,22 +160,22 @@
                 } else if (black[i] == "kingb") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/king_black.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
-                }else if (black[i] == "knightb") {
+                } else if (black[i] == "knightb") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/knight_black.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
-                }else if (black[i] == "rookb") {
+                } else if (black[i] == "rookb") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/rook_black.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
-                }else if (black[i] == "queenb") {
+                } else if (black[i] == "queenb") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/queen_black.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
-                }else if (black[i] == "bishopb") {
+                } else if (black[i] == "bishopb") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/bishop_black.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
                 }
 
             }
-            
+
             for (i in white) {
                 if (white[i] == "pawnw") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/pawn_white.png')";
@@ -172,16 +183,16 @@
                 } else if (white[i] == "kingw") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/king_white.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
-                }else if (white[i] == "knightw") {
+                } else if (white[i] == "knightw") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/knight_white.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
-                }else if (white[i] == "rookw") {
+                } else if (white[i] == "rookw") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/rook_white.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
-                }else if (white[i] == "queenw") {
+                } else if (white[i] == "queenw") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/queen_white.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
-                }else if (white[i] == "bishopw") {
+                } else if (white[i] == "bishopw") {
                     document.getElementById(i).style.backgroundImage = "url('../static/img/pieces/bishop_white.png')";
                     document.getElementById(i).style.backgroundSize = '100%';
                 }
