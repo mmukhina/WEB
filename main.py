@@ -189,6 +189,7 @@ def profile(username):
     form = Search()
     result_id = database("profile", [username])
     result_data = database("profile_data", [result_id])
+    state = 1
         
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -200,10 +201,10 @@ def profile(username):
 
         else:
             return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
-                               id_user=result_id, name_user=username, form=form)
+                               id_user=result_id, name_user=username, form=form, state=state)
 
     return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
-                               id_user=result_id, name_user=username, form=form)
+                               id_user=result_id, name_user=username, form=form, state=state)
 
 @app.route('/facts')
 def facts():
