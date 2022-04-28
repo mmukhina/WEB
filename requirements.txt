@@ -1,3 +1,10 @@
+Flask==1.1.1
+gunicorn
+eventlet==0.30.2
+gevent-websocket
+jinja2<3.1.0
+itsdangerous==2.0.1
+werkzeug==0.16.1
 Flask_WTF==1.0.0
 psycopg2==2.9.3
 psycopg2_binary==2.9.3
@@ -6,10 +13,3 @@ markupsafe==2.0.1
 Flask-SocketIO==4.3.1
 python-engineio==3.13.2
 python-socketio==4.6.0
-Flask==1.1.1
-gunicorn
-eventlet==0.30.2
-gevent-websocket
-jinja2<3.1.0
-itsdangerous==2.0.1
-werkzeug==0.16.1
