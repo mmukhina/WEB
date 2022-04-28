@@ -15,7 +15,7 @@
     
     <script type="text/javascript">
         $(document).ready(function() {
-            var socket = io.connect('https://chess-online-project.herokuapp.com/');
+            var socket = io.connect('https://chess-online-project.herokuapp.com:80');
 
             socket.on('connect', function() {
                 socket.send('{{ player }} has connected!');
