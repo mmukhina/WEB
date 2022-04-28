@@ -3,128 +3,165 @@
 
 <head>
     <link rel="icon" href="../static/img/logo.png" type="image/icon type">
-    <link rel="stylesheet" href="../static/css/style2.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/style2.css">
     <meta charset="UTF-8">
     <meta name=viewport content='width=700'>
     <title>Home</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 
 <body onload='display_images({{ black }}, {{ white }});'>
-    <table class="btn-group">
-        <tbody>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var socket = io.connect('https://chess-online-project.herokuapp.com');
 
-            <tr>
-                <th>8</th>
-                <td><button class="white" id="A8" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="B8" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="C8" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="D8" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="E8" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="F8" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="G8" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="H8" onclick='myfunction(this.id);'></button></td>
-            </tr>
+            socket.on('connect', function() {
+                socket.send('{{ player }} has connected!');
+            });
 
-            <tr>
-                <th>7</th>
-                <td><button class="black" id="A7" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="B7" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="C7" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="D7" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="E7" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="F7" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="G7" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="H7" onclick='myfunction(this.id);'></button></td>
-            </tr>
+            socket.on('message', function(msg) {
+                $("#messages").append('<li>' + msg + '</li>');
+                console.log('Received message');
+            });
 
-            <tr>
-                <th>6</th>
-                <td><button class="white" id="A6" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="B6" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="C6" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="D6" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="E6" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="F6" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="G6" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="H6" onclick='myfunction(this.id);'></button></td>
-            </tr>
+            $('#sendbutton').on('click', function() {
+                socket.send($('#myMessage').val());
+                $('#myMessage').val('');
+            });
 
-            <tr>
-                <th>5</th>
-                <td><button class="black" id="A5" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="B5" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="C5" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="D5" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="E5" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="F5" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="G5" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="H5" onclick='myfunction(this.id);'></button></td>
-            </tr>
+        });
 
-            <tr>
-                <th>4</th>
-                <td><button class="white" id="A4" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="B4" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="C4" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="D4" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="E4" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="F4" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="G4" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="H4" onclick='myfunction(this.id);'></button></td>
-            </tr>
+    </script>
 
-            <tr>
-                <th>3</th>
-                <td><button class="black" id="A3" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="B3" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="C3" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="D3" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="E3" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="F3" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="G3" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="H3" onclick='myfunction(this.id);'></button></td>
-            </tr>
+    <div class="board">
+        <div class="input">
+            <div class="console">
 
-            <tr>
-                <th>2</th>
-                <td><button class="white" id="A2" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="B2" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="C2" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="D2" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="E2" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="F2" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="G2" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="H2" onclick='myfunction(this.id);'></button></td>
-            </tr>
+                <ul id="messages"></ul>
 
-            <tr>
-                <th>1</th>
-                <td><button class="black" id="A1" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="B1" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="C1" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="D1" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="E1" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="F1" onclick='myfunction(this.id);'></button></td>
-                <td><button class="black" id="G1" onclick='myfunction(this.id);'></button></td>
-                <td><button class="white" id="H1" onclick='myfunction(this.id);'></button></td>
-            </tr>
-
-            <tr>
-                <th></th>
-                <th>A</th>
-                <th>B</th>
-                <th>C</th>
-                <th>D</th>
-                <th>E</th>
-                <th>F</th>
-                <th>G</th>
-                <th>H</th>
-            </tr>
-        </tbody>
-    </table>
+            </div>
+            <input type="text" id="myMessage">
+            <button id="sendbutton">Send</button>
+        </div>
 
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <table class="btn-group">
+            <tbody>
+
+                <tr>
+                    <th>8</th>
+                    <td><button class="white" id="A8" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="B8" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="C8" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="D8" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="E8" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="F8" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="G8" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="H8" onclick='myfunction(this.id);'></button></td>
+                </tr>
+
+                <tr>
+                    <th>7</th>
+                    <td><button class="black" id="A7" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="B7" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="C7" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="D7" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="E7" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="F7" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="G7" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="H7" onclick='myfunction(this.id);'></button></td>
+                </tr>
+
+                <tr>
+                    <th>6</th>
+                    <td><button class="white" id="A6" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="B6" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="C6" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="D6" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="E6" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="F6" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="G6" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="H6" onclick='myfunction(this.id);'></button></td>
+                </tr>
+
+                <tr>
+                    <th>5</th>
+                    <td><button class="black" id="A5" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="B5" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="C5" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="D5" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="E5" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="F5" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="G5" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="H5" onclick='myfunction(this.id);'></button></td>
+                </tr>
+
+                <tr>
+                    <th>4</th>
+                    <td><button class="white" id="A4" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="B4" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="C4" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="D4" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="E4" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="F4" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="G4" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="H4" onclick='myfunction(this.id);'></button></td>
+                </tr>
+
+                <tr>
+                    <th>3</th>
+                    <td><button class="black" id="A3" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="B3" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="C3" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="D3" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="E3" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="F3" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="G3" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="H3" onclick='myfunction(this.id);'></button></td>
+                </tr>
+
+                <tr>
+                    <th>2</th>
+                    <td><button class="white" id="A2" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="B2" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="C2" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="D2" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="E2" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="F2" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="G2" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="H2" onclick='myfunction(this.id);'></button></td>
+                </tr>
+
+                <tr>
+                    <th>1</th>
+                    <td><button class="black" id="A1" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="B1" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="C1" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="D1" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="E1" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="F1" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="black" id="G1" onclick='myfunction(this.id);'></button></td>
+                    <td><button class="white" id="H1" onclick='myfunction(this.id);'></button></td>
+                </tr>
+
+                <tr>
+                    <th></th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>E</th>
+                    <th>F</th>
+                    <th>G</th>
+                    <th>H</th>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script>
         function myfunction(clicked) {
             const s = JSON.stringify(clicked); // Stringify converts a JavaScript object or value to a JSON string
@@ -136,7 +173,7 @@
 
         }
 
-    </script>
+        </script> -->
 
     <script>
         function display_images(black, white) {
@@ -189,6 +226,8 @@
         }
 
     </script>
+
+
 
 
 </body>

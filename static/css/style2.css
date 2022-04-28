@@ -4,10 +4,13 @@ body {
     width: 100%;
     margin: 0;
     font-family: sans-serif;
+    padding: 0;
 }
 
 
-.btn-group {
+.board {
+    display: flex;
+    width: 90%;
     left: 50%;
     top: 50%;
     position: absolute;
@@ -15,30 +18,63 @@ body {
 
 }
 
-.btn-group th{
+.btn-group {
+    flex: 1;
+    max-width: 570px;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-group th {
     padding: 5px;
     color: white;
 }
 
-.btn-group button{
+.btn-group button {
     margin: 0;
     padding: 2px;
-    
+
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1000px) {
     .btn-group button {
         width: 65px;
         height: 65px
     }
 
+    .console {
+        height: 500px;
+    }
+
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     .btn-group button {
         width: 50px;
         height: 50px
     }
+
+    .board {
+        display: block
+    }
+
+    .console {
+        height: 120px;
+        margin-bottom: 20px;
+        transform: translate(0%, -190%);
+
+    }
+
+    .btn-group {
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        margin-left: 0;
+        margin-right: 0;
+    }
+
 }
 
 
@@ -50,4 +86,24 @@ body {
 
 .black {
     background-color: black;
+}
+
+
+.console {
+    overflow-y: scroll;
+    flex: 1;
+    background-color: #2D4059;
+    box-shadow: 0 0 25px;
+}
+
+
+.console::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #EEEEEE;
+}
+
+.console::-webkit-scrollbar-thumb
+{
+	background-color: #FF5722;
 }

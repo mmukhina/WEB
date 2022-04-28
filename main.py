@@ -4,9 +4,11 @@ import psycopg2
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, EqualTo
+from flask_socketio import SocketIO, send
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+app.config['SECRET_KEY'] = 'secret_key'
+socketio = SocketIO(app, cors_allowed_origins='*')
 
 class LoginForm(FlaskForm):
     username = StringField('Логин', validators=[DataRequired(message="Введите логин")])
@@ -168,21 +170,17 @@ def register():
     return render_template('register.html', form=form)
 
 
-class Game():
-    def __init__(self):
-        self.list_move = 0
 
 
 
-
-@app.route('/main/<players>', methods=['GET', 'POST'])
-def main(players):
+@app.route('/main/<info>', methods=['GET', 'POST'])
+def main(info):
+    info = info.split(" ")
     if request.method == 'POST':
         move = json.loads(request.data)
-        if white[move] == "":
-            white[move] = "pawnw"
+        print(move)
             
-    return render_template('main.html', black=black, white=white)
+    return render_template('main.html', black=black, white=white, player=info[0])
 
 @app.route('/profile/<username>', methods=['GET', 'POST'])
 def profile(username):
@@ -197,7 +195,7 @@ def profile(username):
             if apponent == str(result_id):
                 form.username.errors.append("Это ваш ID")
             else:
-                return redirect(url_for('main', players=[result_id, int(apponent)]))
+                return redirect(url_for('main', info=str(result_id) + " " + apponent))
 
         else:
             return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
@@ -219,6 +217,11 @@ def admin():
     user_info = database("admin")
     return render_template('admin.html', user_info=user_info)
 
+@socketio.on('message')
+def handleMessage(msg):
+	print('Message: ' + msg)
+	send(msg, broadcast=True)
+
 
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+    socketio.run(app, port=8080, host='127.0.0.1')
