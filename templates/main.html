@@ -12,38 +12,32 @@
 </head>
 
 <body onload='display_images({{ black }}, {{ white }});'>
-    
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var socket = io.connect('https://chess-online-project.herokuapp.com');
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script>
+        socket = io()
 
-            socket.on('connect', function() {
-                socket.send('{{ player }} has connected!');
-            });
-
-            socket.on('message', function(msg) {
-                $("#messages").append('<li>' + msg + '</li>');
-                console.log('Received message');
-            });
-
-            $('#sendbutton').on('click', function() {
-                socket.send($('#myMessage').val());
-                $('#myMessage').val('');
-            });
-
-        });
+        function sendMessage() {
+            socket.emit("message", document.getElementById("chat-input").value)
+        }
+        socket.on("new_message", (data) => {
+            document.getElementById("chat").innerHTML += "<br>" + data;
+            document.getElementById("chat-input").value = "";
+            var objDiv = document.getElementById("con");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        })
 
     </script>
 
+
+
     <div class="board">
         <div class="input">
-            <div class="console">
+            <div id="con" class="console">
 
-                <ul id="messages"></ul>
+                <ul id="chat"></ul>
 
             </div>
-            <input type="text" id="myMessage">
-            <button id="sendbutton">Send</button>
+            <input id="chat-input" type="text"> <button onclick="sendMessage()">Send Message</button>
         </div>
 
 

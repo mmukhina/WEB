@@ -1,14 +1,15 @@
-from flask import Flask, url_for, request, render_template, redirect, send_from_directory
+from flask import Flask, url_for, request, render_template,redirect, send_from_directory, make_response
 import json
 import psycopg2
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, EqualTo
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, emit
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret_key'
-socketio = SocketIO(app, cors_allowed_origins='*')
+socketio = SocketIO(app)
 
 class LoginForm(FlaskForm):
     username = StringField('Логин', validators=[DataRequired(message="Введите логин")])
@@ -217,11 +218,11 @@ def admin():
     user_info = database("admin")
     return render_template('admin.html', user_info=user_info)
 
-@socketio.on('message')
-def handleMessage(msg):
-	print('Message: ' + msg)
-	send(msg, broadcast=True)
+@socketio.on("message")
+def handleMessage(data):
+    emit("new_message",data,broadcast=True)
 
 
-if __name__ == '__main__':
-    socketio.run(app)
+if __name__ == "__main__":
+    socketio.run(app, port=8080, host='127.0.0.1')
+    #socketio.run(app)
