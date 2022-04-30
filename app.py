@@ -38,8 +38,12 @@ class RegisterForm(FlaskForm):
 class Search(FlaskForm):
     username = StringField('ID: ', validators=[DataRequired(message="Введите id"), my_check_profile])
     submit = SubmitField('Создать игру')
+    
 
-
+class Game(FlaskForm):
+    end_game = SubmitField()
+    win = SubmitField()
+    draw = SubmitField()
     
 
 
@@ -80,7 +84,7 @@ def database(state, info=None):
         cur.execute("SELECT name, password FROM users WHERE name = '{}';".format(info[0]))
         result = cur.fetchall()
         if result == []:
-            return "error"
+            result = "error"
 
     elif state == "insert": 
         cur.execute("INSERT INTO users(name, password, picture) VALUES ('{}', '{}', 'dafault.png')".format(info[0], info[1]))
@@ -113,10 +117,40 @@ def database(state, info=None):
         cur.execute("SELECT (win, lose, draw) FROM statistic")
         result2 = [i[0].replace("(", "").replace(")", "").split(",") for i in cur.fetchall()]
 
-        return [i + result2[ind] for ind, i in enumerate(result)]
+        result = [i + result2[ind] for ind, i in enumerate(result)]
+
+    elif state == "room":
+        cur.execute("SELECT * FROM game")
+        try:
+            result = cur.fetchall()[0]
+        except Exception:
+            result = []
+
+    elif state == "create_room":
+        cur.execute("INSERT INTO game (player, apponent) VALUES ({}, {})".format(info[0], info[1]))
+        conn.commit()
+        result = "success"
+
+    elif state == "close":
+        cur.execute("DELETE FROM game")
+        conn.commit()
+        result = "success"
+
+    elif state == "add_win_lose":
+        cur.execute("UPDATE statistic SET win = win + 1 WHERE user_id = '{}'".format(int(info[0])))
+        cur.execute("UPDATE statistic SET lose = lose + 1 WHERE user_id = '{}'".format(int(info[1])))
+        conn.commit()
+        result = "success"
+
+    elif state == "add_draw":
+        cur.execute("UPDATE statistic SET draw = draw + 1 WHERE user_id = '{}'".format(int(info[0])))
+        cur.execute("UPDATE statistic SET draw = draw + 1 WHERE user_id = '{}'".format(int(info[1])))
+        conn.commit()
+        result = "success"
+        
         
     elif state == "error":
-        return "no_in"
+        result = "no_in"
 
         
     cur.close()
@@ -176,34 +210,58 @@ def register():
 
 @app.route('/main/<info>', methods=['GET', 'POST'])
 def main(info):
+    form = Game()
     info = info.split(" ")
     if request.method == 'POST':
-        move = json.loads(request.data)
-        print(move)
+        if form.end_game.data:
+            close = database("close")
+            return redirect(url_for('profile', username=info[2]))
+        elif form.win.data:
+            close = database("close")
+            add_win_lose = database("add_win_lose", info)
+            return redirect(url_for('profile', username=info[2]))
+        elif form.draw.data:
+            close = database("close")
+            add_draw = database("add_draw", info)
+            return redirect(url_for('profile', username=info[2]))
+        
             
-    return render_template('main.html', black=black, white=white, player=info[0])
+    return render_template('main.html', black=black, white=white, player=info[0], apponent=info[1], form=form)
+
 
 @app.route('/profile/<username>', methods=['GET', 'POST'])
 def profile(username):
     form = Search()
     result_id = database("profile", [username])
     result_data = database("profile_data", [result_id])
-    state = 1
+    room = database("room")
+    if result_id in room:
+        state = 1
+        apponent = room[1]
+    elif result_data in room:
+        state = 1
+        apponent = room[0]
+    else:
+        state = 0
+        apponent = 0
         
     if request.method == 'POST':
         if form.validate_on_submit():
             apponent = request.form['username']
             if apponent == str(result_id):
                 form.username.errors.append("Это ваш ID")
+            elif room == []:
+                create_room = database("create_room", [result_id, int(apponent)])
+                return redirect(url_for('main', info=str(result_id) + " " + apponent + " " + username))
             else:
-                return redirect(url_for('main', info=str(result_id) + " " + apponent))
+                form.username.errors.append("Подождите пока закончиться игра")
 
         else:
             return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
-                               id_user=result_id, name_user=username, form=form, state=state)
+                               id_user=result_id, name_user=username, form=form, state=state, apponent=apponent)
 
     return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
-                               id_user=result_id, name_user=username, form=form, state=state)
+                               id_user=result_id, name_user=username, form=form, state=state, apponent=apponent)
 
 @app.route('/facts')
 def facts():

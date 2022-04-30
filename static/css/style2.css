@@ -97,13 +97,40 @@ body {
 }
 
 
-.console::-webkit-scrollbar
-{
-	width: 6px;
-	background-color: #EEEEEE;
+.console::-webkit-scrollbar {
+    width: 6px;
+    background-color: #EEEEEE;
 }
 
-.console::-webkit-scrollbar-thumb
-{
-	background-color: #FF5722;
+.console::-webkit-scrollbar-thumb {
+    background-color: #FF5722;
+}
+
+.submit {
+    color: blue;
+}
+
+.loader {
+    border: 16px solid #FF5722;
+    border-top: 16px solid #EEEEEE;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 2s linear infinite;
+    display: none;
+    position: absolute;
+    left: 45%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

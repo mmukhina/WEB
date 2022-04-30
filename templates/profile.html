@@ -18,6 +18,9 @@
 </head>
 
 <body>
+    
+    <div id="load" class="loader"></div>
+    
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
       <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
@@ -25,7 +28,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-          Перейти к игре <a href="main.html">ссылка</a>
+          <a style="color: #FF5722" href="https://chess-online-project.herokuapp.com/main/{{id_user }} {{ apponent }}">Перейти к игре.</a>
         </div>
       </div>
     </div>
@@ -66,7 +69,7 @@
                 <div>
                     {{ form.username.label (class="label") }}
                     {{ form.username(class="info") }}
-                    {{ form.submit(type="submit", class="submit") }}
+                    {{ form.submit(type="submit", class="submit", onclick="show_load()")}}
 
                     {% for error in form.username.errors %}
                     <div id="message" role="alert">{{ error }}</div>
@@ -93,7 +96,7 @@
 
 <script>
     var toastLiveExample = document.getElementById('liveToast')
-    if ({{ state }} != []) {
+    if ({{ state }} == 1) {
         var toast = new bootstrap.Toast(toastLiveExample)
         toast.show()
 

@@ -24,20 +24,29 @@
             document.getElementById("chat-input").value = "";
             var objDiv = document.getElementById("con");
             objDiv.scrollTop = objDiv.scrollHeight;
+            document.getElementById("C4").style.backgroundImage = "url('../static/img/pieces/pawn_white.png')";
         })
 
     </script>
 
+    <div id="load" class="loader"></div>
 
 
     <div class="board">
         <div class="input">
+            
             <div id="con" class="console">
 
                 <ul id="chat"></ul>
 
             </div>
             <input id="chat-input" type="text"> <button onclick="sendMessage()">Send Message</button>
+            <form method="post">
+                {{ form.hidden_tag() }}
+                {{ form.end_game (onclick="show_load()")}}
+                {{ form.win (onclick="show_load()") }}
+                {{ form.draw (onclick="show_load()") }}
+            </form>
         </div>
 
 
@@ -218,6 +227,19 @@
 
             }
 
+        }
+
+    </script>
+
+    <script>
+
+        function show_load() {
+            var x = document.getElementById("load");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
         }
 
     </script>
