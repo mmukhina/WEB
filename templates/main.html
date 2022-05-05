@@ -17,24 +17,66 @@
         socket = io()
 
         function sendMessage() {
-            socket.emit("message", document.getElementById("chat-input").value)
+            socket.emit("message", document.getElementById("chat-input").value);
+
         }
         socket.on("new_message", (data) => {
             document.getElementById("chat").innerHTML += "<br>" + data;
             document.getElementById("chat-input").value = "";
             var objDiv = document.getElementById("con");
             objDiv.scrollTop = objDiv.scrollHeight;
-            document.getElementById("C4").style.backgroundImage = "url('../static/img/pieces/pawn_white.png')";
+            var moves = data.split(" ");
+            if (moves[0] == "del") {
+                document.getElementById(moves[1]).style.backgroundImage = "";
+            } else if (moves[0] == "p") {
+                if (moves[2] == "pawnb") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/pawn_black.png')";
+                    document.getElementById(i).style.backgroundSize = '100%';
+                } else if (moves[2] == "kingb") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/king_black.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                } else if (moves[2] == "knightb") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/knight_black.png')";
+                    document.getElementById(i).style.backgroundSize = '100%';
+                } else if (moves[2] == "rookb") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/rook_black.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                } else if (moves[2] == "queenb") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/queen_black.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                } else if (moves[2] == "bishopb") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/bishop_black.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                } else if (moves[2] == "pawnw") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/pawn_white.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                } else if (moves[2] == "kingw") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/king_white.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                } else if (moves[2] == "knightw") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/knight_white.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                } else if (moves[2] == "rookw") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/rook_white.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                } else if (moves[2] == "queenw") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/queen_white.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                } else if (moves[2] == "bishopw") {
+                    document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/bishop_white.png')";
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
+                }
+
+            }
+
         })
 
     </script>
 
-    <div id="load" class="loader"></div>
-
 
     <div class="board">
         <div class="input">
-            
+
             <div id="con" class="console">
 
                 <ul id="chat"></ul>
@@ -232,7 +274,6 @@
     </script>
 
     <script>
-
         function show_load() {
             var x = document.getElementById("load");
             if (x.style.display === "none") {

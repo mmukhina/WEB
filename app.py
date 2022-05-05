@@ -279,8 +279,9 @@ def admin():
 @socketio.on("message")
 def handleMessage(data):
     emit("new_message",data,broadcast=True)
+    print(data)
 
 
 if __name__ == "__main__":
-    socketio.run(app, port=8080, host='127.0.0.1')
-    #socketio.run(app)
+    #socketio.run(app, port=8080, host='127.0.0.1')
+    socketio.run(app)
