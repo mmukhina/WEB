@@ -80,15 +80,16 @@
             <div id="con" class="console">
 
                 <ul id="chat"></ul>
-
+                <div class="send_bottom">
+                    <input id="chat-input" type="text"> <button class="send_btn" onclick="sendMessage()">Send Message</button>
+                    <form method="post" style="margin-top: 8px;margin-bottom: 20px">
+                        {{ form.hidden_tag() }}
+                        {{ form.end_game (class="send_btn") }}
+                        {{ form.win (class="send_btn") }}
+                        {{ form.draw (class="send_btn") }}
+                    </form>
+                </div>
             </div>
-            <input id="chat-input" type="text"> <button onclick="sendMessage()">Send Message</button>
-            <form method="post">
-                {{ form.hidden_tag() }}
-                {{ form.end_game (onclick="show_load()")}}
-                {{ form.win (onclick="show_load()") }}
-                {{ form.draw (onclick="show_load()") }}
-            </form>
         </div>
 
 

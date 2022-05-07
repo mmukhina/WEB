@@ -1,13 +1,19 @@
-from flask import Flask, url_for, request, render_template,redirect, send_from_directory, make_response
+from flask import Flask, url_for, request, render_template,redirect, send_from_directory, make_response, flash
 import json
 import psycopg2
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, EqualTo
 from flask_socketio import SocketIO, send, emit
+from werkzeug.utils import secure_filename
+import urllib.request
 import os
 
 app = Flask(__name__)
+UPLOAD_FOLDER = 'static/uploads/'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['SECRET_KEY'] = 'secret_key'
 socketio = SocketIO(app)
 
@@ -235,6 +241,7 @@ def profile(username):
     result_id = database("profile", [username])
     result_data = database("profile_data", [result_id])
     room = database("room")
+    image = "default.png"
     if result_id in room:
         state = 1
         apponent = room[1]
@@ -258,10 +265,10 @@ def profile(username):
 
         else:
             return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
-                               id_user=result_id, name_user=username, form=form, state=state, apponent=apponent)
+                               id_user=result_id, name_user=username, form=form, state=state, apponent=apponent, image=image)
 
     return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
-                               id_user=result_id, name_user=username, form=form, state=state, apponent=apponent)
+                               id_user=result_id, name_user=username, form=form, state=state, apponent=apponent, image=image)
 
 @app.route('/facts')
 def facts():
@@ -282,6 +289,41 @@ def handleMessage(data):
     print(data)
 
 
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+	
+    
+
+@app.route('/upload_form/<username>', methods=['GET', 'POST'])
+def upload_form(username):
+        if request.method == 'POST':
+            if 'file' not in request.files:
+                flash('Нет файловой части')
+                return render_template('upload.html', username=username)
+            
+            file = request.files['file']
+            
+            if file.filename == '':
+                flash('Не выбрано изображение для загрузки')
+                return render_template('upload.html', username=username)
+                
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                flash('Изображение успешно загружено и отображено ниже')
+                return render_template('upload.html',username=username, filename=filename)
+            else:
+                flash('Допустимые типы изображений: png, jpg, jpeg')
+                return render_template('upload.html', username=username)
+        else:
+                return render_template('upload.html', username=username)
+    
+
+@app.route('/display/<filename>')
+def display_image(filename):
+    return redirect(url_for('static', filename='uploads/' + filename), code=301)
+
+
 if __name__ == "__main__":
-    #socketio.run(app, port=8080, host='127.0.0.1')
-    socketio.run(app)
+    socketio.run(app, port=8080, host='127.0.0.1')
+    #socketio.run(app)

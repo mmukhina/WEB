@@ -45,9 +45,14 @@ body {
     }
 
     .console {
-        height: 500px;
+        height: 490px;
+        min-width: 300px;
     }
 
+    .send_bottom{
+        position: absolute;
+    }
+    
 }
 
 @media screen and (max-width: 1000px) {
@@ -57,13 +62,13 @@ body {
     }
 
     .board {
-        display: block
+        display: block;
     }
 
     .console {
-        height: 120px;
-        margin-bottom: 20px;
-        transform: translate(0%, -190%);
+        height: 150px;
+        margin-bottom: 5px;
+        transform: translate(0%, -170%);
 
     }
 
@@ -74,6 +79,15 @@ body {
         margin-left: 0;
         margin-right: 0;
     }
+    
+    .send_btn{
+        background-color: #2D4059;
+    }
+    
+    .send_bottom{
+        margin-left: 10px;
+    }
+    
 
 }
 
@@ -91,9 +105,13 @@ body {
 
 .console {
     overflow-y: scroll;
-    flex: 1;
     background-color: #2D4059;
+    flex: 1;
     box-shadow: 0 0 25px;
+}
+
+.console span {
+    bottom: 0;
 }
 
 
@@ -110,27 +128,29 @@ body {
     color: blue;
 }
 
-.loader {
-    border: 16px solid #FF5722;
-    border-top: 16px solid #EEEEEE;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    animation: spin 2s linear infinite;
-    display: none;
-    position: absolute;
-    left: 45%;
-    top: 45%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
+.send_btn {
+    border-radius: 4px;
+    background-color: #222831;
+    color: #FF5722;
+    transition-duration: 0.3s;
+    border: 3px solid #EEEEEE;
+
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
+.send_btn:hover {
+    background-color: #EEEEEE;
+    color: #FF5722;
+    box-shadow: 4px 4px #FF5722;
+}
 
-    100% {
-        transform: rotate(360deg);
-    }
+.send_bottom{
+    bottom: 0;
+}
+
+#chat-input{
+    outline: none;
+}
+
+#chat{
+    color: #EEEEEE;
 }
