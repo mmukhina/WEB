@@ -107,8 +107,8 @@ def database(state, info=None):
         result = "success"
 
     elif state == "profile":
-        cur.execute("SELECT id FROM users WHERE name = '{}';".format(info[0]))
-        result = cur.fetchall()[0][0]
+        cur.execute("SELECT id, picture FROM users WHERE name = '{}';".format(info[0]))
+        result = cur.fetchall()[0]
 
     elif state == "profile_data":
         cur.execute("SELECT win, lose, draw FROM statistic WHERE user_id = '{}';".format(info[0]))
@@ -158,7 +158,7 @@ def database(state, info=None):
         result = "success"
 
     elif state == "change_pic":
-        cur.execute("UPDATE users SET picture = {} WHERE name = '{}'".format(info[1], info[0]))
+        cur.execute("UPDATE users SET picture = '{}' WHERE name = '{}'".format(info[1], info[0]))
         conn.commit()
         result = "success"
         
@@ -246,10 +246,12 @@ def main(info):
 @app.route('/profile/<username>', methods=['GET', 'POST'])
 def profile(username):
     form = Search()
-    result_id = database("profile", [username])
+    result = database("profile", [username])
+    result_id = result[0]
+    image = result[1]
     result_data = database("profile_data", [result_id])
     room = database("room")
-    image = "default.png"
+    
     if result_id in room:
         state = 1
         apponent = room[1]
