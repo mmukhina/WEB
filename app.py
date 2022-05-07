@@ -91,6 +91,9 @@ def database(state, info=None):
         result = cur.fetchall()
         if result == []:
             result = "error"
+        else:
+            cur.execute("UPDATE users SET picture = 'dafault.png' WHERE name = '{}'".format(info[0]))
+            conn.commit()
 
     elif state == "insert": 
         cur.execute("INSERT INTO users(name, password, picture) VALUES ('{}', '{}', 'dafault.png')".format(info[0], info[1]))
@@ -151,6 +154,11 @@ def database(state, info=None):
     elif state == "add_draw":
         cur.execute("UPDATE statistic SET draw = draw + 1 WHERE user_id = '{}'".format(int(info[0])))
         cur.execute("UPDATE statistic SET draw = draw + 1 WHERE user_id = '{}'".format(int(info[1])))
+        conn.commit()
+        result = "success"
+
+    elif state == "change_pic":
+        cur.execute("UPDATE users SET picture = {} WHERE name = '{}'".format(info[1], info[0]))
         conn.commit()
         result = "success"
         
@@ -311,6 +319,7 @@ def upload_form(username):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 flash('Изображение успешно загружено и отображено ниже')
+                change_pic = database("change_pic", [username, filename])
                 return render_template('upload.html',username=username, filename=filename)
             else:
                 flash('Допустимые типы изображений: png, jpg, jpeg')
