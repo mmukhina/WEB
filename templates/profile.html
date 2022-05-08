@@ -46,9 +46,9 @@
         </div>
         <div class="offcanvas-body">
             <div class="menu">
-                <a href="https://chess-online-project.herokuapp.com/profile/{{ username }}" class="active">Профиль</a>
-                <a href="https://chess-online-project.herokuapp.com/facts/{{ username }}">Интересные факты</a>
-                <a href="https://chess-online-project.herokuapp.com/rules/{{ username }}">Правила Игры</a>
+                <a href="https://chess-online-project.herokuapp.com/profile/{{ name_user }}" class="active">Профиль</a>
+                <a href="https://chess-online-project.herokuapp.com/facts/{{ name_user }}">Интересные факты</a>
+                <a href="https://chess-online-project.herokuapp.com/rules/{{ name_user }}">Правила Игры</a>
                 <a href="https://chess-online-project.herokuapp.com/login">Выйти</a>
             </div>
         </div>
@@ -58,7 +58,6 @@
     <div class="structure">
         <div class="box">
             <a href="https://chess-online-project.herokuapp.com/upload_form/{{ name_user }}" ><img class="photo" src="../static/uploads/{{ image }}"></a>
-            {{ image }}
             <h3>Персональные данные</h3>
             <div>ID: {{ id_user }}</div>
             <div>Логин: {{ name_user }}</div>
