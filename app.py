@@ -284,11 +284,11 @@ def profile(username):
 
 @app.route('/facts/<username>')
 def facts(username):
-    return render_template('facts.html', username=usename)
+    return render_template('facts.html', username=username)
 
 @app.route('/rules/<username>')
 def rules(username):
-    return render_template('rules.html', username=usename)
+    return render_template('rules.html', username=username)
 
 @app.route('/admin')
 def admin():
