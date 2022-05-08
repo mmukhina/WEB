@@ -251,16 +251,18 @@ def profile(username):
     image = result[1]
     result_data = database("profile_data", [result_id])
     room = database("room")
-    
-    if result_id in room:
-        state = 1
-        apponent = room[1]
-    elif result_data in room:
-        state = 1
-        apponent = room[0]
-    else:
+
+    print(room, type(room))
+    if room == []:
         state = 0
         apponent = 0
+    elif result_id == room[0]:
+        state = 1
+        apponent = room[1]
+    elif result_id == room[1]:
+        state = 1
+        apponent = room[0]
+        
         
     if request.method == 'POST':
         if form.validate_on_submit():
