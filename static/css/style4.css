@@ -45,6 +45,19 @@ h1{
 .check{
     margin: 0;
     float: left;
+    
+}
+
+.other_page{
+    float: left;
+    text-decoration: none;
+    color: #EEEEEE;
+    font-size: 11px;
+    margin-top: 40px;
+}
+
+.other_page:hover{
+    text-decoration: underline;
 }
 
 .submit{
@@ -70,6 +83,7 @@ h1{
     border-right: none;
     border-left: none;
     width: 85%;
+    outline: none;
 }
 
 

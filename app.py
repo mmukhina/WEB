@@ -36,7 +36,7 @@ def my_check_profile(form, field):
 class RegisterForm(FlaskForm):
     username = StringField('Логин', validators=[DataRequired(message="Введите логин"), my_check])
     password = PasswordField('Пароль', validators=[DataRequired(message="Введите пароль")])
-    password_rep = PasswordField('Пароль', validators=[DataRequired(message="Введите пароль"),EqualTo('password', message='Пароли не совпадают')])
+    password_rep = PasswordField('Повторите пароль', validators=[DataRequired(message="Введите пароль"),EqualTo('password', message='Пароли не совпадают')])
     checkbox = BooleanField("Я соглашаюсь на обработку персональных данных", validators=[DataRequired(message="Необходимое поле")])
     submit = SubmitField('Войти')
 
@@ -92,11 +92,11 @@ def database(state, info=None):
         if result == []:
             result = "error"
         else:
-            cur.execute("UPDATE users SET picture = 'dafault.png' WHERE name = '{}'".format(info[0]))
+            cur.execute("UPDATE users SET picture = 'default.png' WHERE name = '{}'".format(info[0]))
             conn.commit()
 
     elif state == "insert": 
-        cur.execute("INSERT INTO users(name, password, picture) VALUES ('{}', '{}', 'dafault.png')".format(info[0], info[1]))
+        cur.execute("INSERT INTO users(name, password, picture) VALUES ('{}', '{}', 'default.png')".format(info[0], info[1]))
         conn.commit()
 
         cur.execute("SELECT id FROM users WHERE name = '{}';".format(info[0]))
@@ -280,13 +280,13 @@ def profile(username):
     return render_template('profile.html', win=result_data[0], lose=result_data[1], draw=result_data[2],
                                id_user=result_id, name_user=username, form=form, state=state, apponent=apponent, image=image)
 
-@app.route('/facts')
-def facts():
-    return render_template('facts.html')
+@app.route('/facts/<username>')
+def facts(username):
+    return render_template('facts.html', username=usename)
 
-@app.route('/rules')
-def rules():
-    return render_template('rules.html')
+@app.route('/rules/<username>')
+def rules(username):
+    return render_template('rules.html', username=usename)
 
 @app.route('/admin')
 def admin():
