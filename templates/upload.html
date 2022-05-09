@@ -14,7 +14,7 @@
 
 <body>
     <div class='box'>
-    <h1>Выберите Фотографию</h1>
+    <h1>Выберите фотографию</h1>
     
         {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -36,11 +36,12 @@
     <form method="post" action="/upload_form/{{ username }}" enctype="multipart/form-data">
         <dl>
             <p>
-                <input type="file" name="file" autocomplete="off" required>
+                <input id="file" type="file" name="file" autocomplete="off" required>
+                <label class="submit_btn" for="file">Выбрать фотку</label>
             </p>
         </dl>
         <p>
-            <input class="submit_btn" type="submit" value="Submit">
+            <input style="margin-left: 10px" class="submit_btn" type="submit" value="Загрузить">
             <a id="btn3" class="submit_btn" href="https://chess-online-project.herokuapp.com/profile/{{ username }}">Вернуться в профиль</a>
         </p>
     </form>

@@ -16,6 +16,26 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['SECRET_KEY'] = 'secret_key'
 socketio = SocketIO(app)
+DATABASE_URL = os.environ['DATABASE_URL']
+
+black_orig = {"A1":"", "A2": "", "A3": "", "A4": "", "A5": "", "A6": "", "A7": "pawnb", "A8": "rookb",
+         "B1":"", "B2": "", "B3": "", "B4": "", "B5": "", "B6": "", "B7": "pawnb", "B8": "knightb",
+         "C1":"", "C2": "", "C3": "", "C4": "", "C5": "", "C6": "", "C7": "pawnb", "C8": "bishopb",
+         "D1":"", "D2": "", "D3": "", "D4": "", "D5": "", "D6": "", "D7": "pawnb", "D8": "queenb",
+         "E1":"", "E2": "", "E3": "", "E4": "", "E5": "", "E6": "", "E7": "pawnb", "E8": "kingb",
+         "F1":"", "F2": "", "F3": "", "F4": "", "F5": "", "F6": "", "F7": "pawnb", "F8": "bishopb",
+         "G1":"", "G2": "", "G3": "", "G4": "", "G5": "", "G6": "", "G7": "pawnb", "G8": "knightb",
+         "H1":"", "H2": "", "H3": "", "H4": "", "H5": "", "H6": "", "H7": "pawnb", "H8": "rookb"}
+
+white_orig = {"A1":"rookw", "A2": "pawnw", "A3": "", "A4": "", "A5": "", "A6": "", "A7": "", "A8": "",
+         "B1":"knightw", "B2": "pawnw", "B3": "", "B4": "", "B5": "", "B6": "", "B7": "", "B8": "",
+         "C1":"bishopw", "C2": "pawnw", "C3": "", "C4": "", "C5": "", "C6": "", "C7": "", "C8": "",
+         "D1":"queenw", "D2": "pawnw", "D3": "", "D4": "", "D5": "", "D6": "", "D7": "", "D8": "",
+         "E1":"kingw", "E2": "pawnw", "E3": "", "E4": "", "E5": "", "E6": "", "E7": "", "E8": "",
+         "F1":"bishopw", "F2": "pawnw", "F3": "", "F4": "", "F5": "", "F6": "", "F7": "", "F8": "",
+         "G1":"knightw", "G2": "pawnw", "G3": "", "G4": "", "G5": "", "G6": "", "G7": "", "G8": "",
+         "H1":"rookw", "H2": "pawnw", "H3": "", "H4": "", "H5": "", "H6": "", "H7": "", "H8": ""}
+
 
 class LoginForm(FlaskForm):
     username = StringField('Логин', validators=[DataRequired(message="Введите логин")])
@@ -47,34 +67,12 @@ class Search(FlaskForm):
     
 
 class Game(FlaskForm):
-    end_game = SubmitField()
-    win = SubmitField()
-    draw = SubmitField()
+    end_game = SubmitField("Закончить игру")
+    win = SubmitField("Мат")
+    draw = SubmitField("Пат")
     
 
-
-black = {"A1":"", "A2": "", "A3": "", "A4": "", "A5": "", "A6": "", "A7": "pawnb", "A8": "rookb",
-         "B1":"", "B2": "", "B3": "", "B4": "", "B5": "", "B6": "", "B7": "pawnb", "B8": "knightb",
-         "C1":"", "C2": "", "C3": "", "C4": "", "C5": "", "C6": "", "C7": "pawnb", "C8": "bishopb",
-         "D1":"", "D2": "", "D3": "", "D4": "", "D5": "", "D6": "", "D7": "pawnb", "D8": "queenb",
-         "E1":"", "E2": "", "E3": "", "E4": "", "E5": "", "E6": "", "E7": "pawnb", "E8": "kingb",
-         "F1":"", "F2": "", "F3": "", "F4": "", "F5": "", "F6": "", "F7": "pawnb", "F8": "bishopb",
-         "G1":"", "G2": "", "G3": "", "G4": "", "G5": "", "G6": "", "G7": "pawnb", "G8": "knightb",
-         "H1":"", "H2": "", "H3": "", "H4": "", "H5": "", "H6": "", "H7": "pawnb", "H8": "rookb"}
-
-white = {"A1":"rookw", "A2": "pawnw", "A3": "", "A4": "", "A5": "", "A6": "", "A7": "", "A8": "",
-         "B1":"knightw", "B2": "pawnw", "B3": "", "B4": "", "B5": "", "B6": "", "B7": "", "B8": "",
-         "C1":"bishopw", "C2": "pawnw", "C3": "", "C4": "", "C5": "", "C6": "", "C7": "", "C8": "",
-         "D1":"queenw", "D2": "pawnw", "D3": "", "D4": "", "D5": "", "D6": "", "D7": "", "D8": "",
-         "E1":"kingw", "E2": "pawnw", "E3": "", "E4": "", "E5": "", "E6": "", "E7": "", "E8": "",
-         "F1":"bishopw", "F2": "pawnw", "F3": "", "F4": "", "F5": "", "F6": "", "F7": "", "F8": "",
-         "G1":"knightw", "G2": "pawnw", "G3": "", "G4": "", "G5": "", "G6": "", "G7": "", "G8": "",
-         "H1":"rookw", "H2": "pawnw", "H3": "", "H4": "", "H5": "", "H6": "", "H7": "", "H8": ""}
-
-
 def database(state, info=None):
-    DATABASE_URL = "postgres://qybkrxdzbfsmnq:4abdee2cf19e5e24290e8b6f813fa91c9fded73e4ac639b3994bd3acf2f77bdb@ec2-3-209-61-239.compute-1.amazonaws.com:5432/dbu1marqhos8n6"
-
     try:
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
@@ -141,9 +139,13 @@ def database(state, info=None):
         result = "success"
 
     elif state == "close":
-        cur.execute("DELETE FROM game")
-        conn.commit()
-        result = "success"
+        try:
+            cur.execute("DELETE FROM game")
+            cur.execute("DELETE FROM moves")
+            conn.commit()
+            result = "success"
+        except Exception:
+            result = "closed"
 
     elif state == "add_win_lose":
         cur.execute("UPDATE statistic SET win = win + 1 WHERE user_id = '{}'".format(int(info[0])))
@@ -161,7 +163,16 @@ def database(state, info=None):
         cur.execute("UPDATE users SET picture = '{}' WHERE name = '{}'".format(info[1], info[0]))
         conn.commit()
         result = "success"
-        
+
+    elif state == "add":
+        cur.execute("INSERT INTO moves (move) VALUES ('{}')".format(info[0]))
+        conn.commit()
+        result = "success"
+
+    elif state == "moves":
+        cur.execute("SELECT * FROM moves")
+        temp = cur.fetchall()
+        result = [i[0] for i in temp]
         
     elif state == "error":
         result = "no_in"
@@ -226,21 +237,52 @@ def register():
 def main(info):
     form = Game()
     info = info.split(" ")
+    moves = database("moves")
+    black_lis = ["kingb", "queenb", "pawnb", "bishopb", "rookb", "knightb"]
+    white_lis = ["kingw", "queenw", "pawnw", "bishopw", "rookw", "knightw"]
+
+    black = black_orig.copy()
+    white = white_orig.copy()
+                                
+    for i in moves:
+        temp = i.split(" ")
+        if temp[0] == "d":
+            try:
+                white[temp[1]] = ""
+                black[temp[1]] = ""
+            except Exception:
+                pass
+        elif temp[0] == "p":
+            if len(temp) == 3:
+                if temp[2] in black_lis:
+                    try:
+                        black[temp[1]] = temp[2]
+                    except Exception:
+                        pass
+                elif temp[2] in white_lis:
+                    try:
+                        white[temp[1]] = temp[2]
+                    except Exception:
+                        pass
+                    
+                
     if request.method == 'POST':
         if form.end_game.data:
             close = database("close")
             return redirect(url_for('profile', username=info[2]))
         elif form.win.data:
             close = database("close")
-            add_win_lose = database("add_win_lose", info)
+            if close != "closed":
+                add_win_lose = database("add_win_lose", info)
             return redirect(url_for('profile', username=info[2]))
         elif form.draw.data:
             close = database("close")
-            add_draw = database("add_draw", info)
+            if close != "closed":
+                add_draw = database("add_draw", info)
             return redirect(url_for('profile', username=info[2]))
         
             
-    return render_template('main.html', black=black, white=white, player=info[0], apponent=info[1], form=form)
+    return render_template('main.html', black=black, white=white, player=info[0], apponent=info[1], form=form, moves=moves)
 
 
 @app.route('/profile/<username>', methods=['GET', 'POST'])
@@ -252,7 +294,6 @@ def profile(username):
     result_data = database("profile_data", [result_id])
     room = database("room")
 
-    print(room, type(room))
     if room == []:
         state = 0
         apponent = 0
@@ -298,7 +339,7 @@ def admin():
 @socketio.on("message")
 def handleMessage(data):
     emit("new_message",data,broadcast=True)
-    print(data)
+    add = database("add", [data])
 
 
 def allowed_file(filename):
@@ -338,5 +379,5 @@ def display_image(filename):
 
 
 if __name__ == "__main__":
-    socketio.run(app, port=8080, host='127.0.0.1')
-    #socketio.run(app)
+    #socketio.run(app, port=8080, host='127.0.0.1')
+    socketio.run(app)

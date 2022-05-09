@@ -12,13 +12,10 @@ table{
     width: 90%;
     left: 50%;
     position: absolute;
-    transform: translate(-50%, -50%);
-    margin-top: 100px;
+    transform: translate(-50%);
     border-collapse: separate;
     border-spacing: 10px;
     
-    
-
 }
 
 h1{
