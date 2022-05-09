@@ -96,7 +96,7 @@ body {
     border-radius: 4px;
     border: none;
     height: 31px;
-    width: 315px
+    width: 310px
 }
 
 #chat {
@@ -125,24 +125,26 @@ body {
 }
 
 @media screen and (max-width: 940px) {
-    .board{
+    .board {
         transform: translate(-50%, 5%);
     }
-    .console{
+
+    .console {
         height: 90px;
     }
-    .input-1{
+
+    .input-1 {
         transform: translate(0%, 0%);
         margin-right: 0px;
     }
-    
+
 }
 
-.send_bottom{
+.send_bottom {
     margin-top: 10px;
 }
 
-.end{
+.end {
     margin-top: 10px;
     margin-bottom: 10px;
 }

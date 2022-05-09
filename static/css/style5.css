@@ -12,20 +12,20 @@
 }
 
 @media screen and (min-width: 700px) {
-    .box{
+    .box {
         margin-top: 1.5%;
     }
 }
 
-.bar{
+.bar {
     width: 250px;
 }
 
-.bar:focus{
+.bar:focus {
     outline: none;
 }
 
-.submit{
+.submit {
     display: inline-block;
     vertical-align: middle;
     border-radius: 4px;
@@ -36,13 +36,13 @@
     height: 30px;
 }
 
-.submit:hover{
+.submit:hover {
     background-color: #EEEEEE;
     color: #FF5722;
     box-shadow: 8px 8px #FF5722;
 }
 
-.info{
+.info {
     display: inline-block;
     vertical-align: middle;
     border: none;
@@ -50,54 +50,54 @@
     height: 30px;
 }
 
-.info:focus{
+.info:focus {
     outline: none;
 }
 
-.label{
+.label {
     display: inline-block;
     vertical-align: middle;
 }
 
-#message{
+#message {
     color: #FF5722;
 }
 
-.game_btn{
+.game_btn {
     display: inline-block;
     vertical-align: middle;
     float: right;
 }
 
 
-.game_btn button{
+.game_btn button {
     border-radius: 4px;
     background-color: #2D4059;
     color: #FF5722;
     transition-duration: 0.3s;
     border: 3px solid #EEEEEE;
     height: 30px;
-    
+
 }
 
-.game_btn button:hover{
+.game_btn button:hover {
     background-color: #EEEEEE;
     color: #FF5722;
     box-shadow: 8px 8px #FF5722;
 }
 
-#new_game{
+#new_game {
     padding-bottom: 25px;
     padding-right: 25px;
 }
 
-.photo{
+.photo {
     width: 90px;
     height: 90px;
     float: right;
     border-radius: 50%;
 }
 
-.photo:hover{
+.photo:hover {
     box-shadow: 0 0 20px black;
 }

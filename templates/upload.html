@@ -7,45 +7,44 @@
 
     <link rel="icon" href="../static/img/logo.png" type="image/icon type">
     <meta name=viewport content='width=500'>
-    
+
     <link rel="stylesheet" type="text/css" href="../static/css/style8.css">
 
 </head>
 
 <body>
     <div class='box'>
-    <h1>Выберите фотографию</h1>
-    
+        <h1>Выберите фотографию</h1>
+
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-    
+
         {% for message in messages %}
         <p class="message">{{ message }}</p>
         {% endfor %}
-    
-    {% endif %}
-    {% endwith %}
 
-    
+        {% endif %}
+        {% endwith %}
 
-    {% if filename %}
-    <div>
-        <img class="image_circle" src="{{ url_for('display_image', filename=filename) }}">
-    </div>
-    {% endif %}
-    <form method="post" action="/upload_form/{{ username }}" enctype="multipart/form-data">
-        <dl>
+
+
+        {% if filename %}
+        <div>
+            <img class="image_circle" src="{{ url_for('display_image', filename=filename) }}">
+        </div>
+        {% endif %}
+        <form method="post" action="/upload_form/{{ username }}" enctype="multipart/form-data">
+            <dl>
+                <p>
+                    <input id="file" type="file" name="file" autocomplete="off" required>
+                    <label class="submit_btn" for="file">Выбрать фотку</label>
+                </p>
+            </dl>
             <p>
-                <input id="file" type="file" name="file" autocomplete="off" required>
-                <label class="submit_btn" for="file">Выбрать фотку</label>
+                <input style="margin-left: 10px" class="submit_btn" type="submit" value="Загрузить">
+                <a id="btn3" class="submit_btn" href="https://chess-online-project.herokuapp.com/profile/{{ username }}">Вернуться в профиль</a>
             </p>
-        </dl>
-        <p>
-            <input style="margin-left: 10px" class="submit_btn" type="submit" value="Загрузить">
-            <a id="btn3" class="submit_btn" href="https://chess-online-project.herokuapp.com/profile/{{ username }}">Вернуться в профиль</a>
-        </p>
-    </form>
+        </form>
     </div>
 
-    </body>
-</html>
+</body></html>

@@ -1,12 +1,12 @@
-body{
+body {
     background-color: #222831;
     margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
 
-.box{
-   background: #2D4059;
+.box {
+    background: #2D4059;
     left: 50%;
     top: 30%;
     transform: translate(-50%, -30%);
@@ -17,38 +17,39 @@ body{
 }
 
 @media screen and (min-width: 700px) {
-    .box{
+    .box {
         width: 50%;
     }
 }
+
 @media screen and (max-width: 700px) {
-    .box{
+    .box {
         width: 80%;
     }
 }
 
-h1{
+h1 {
     color: #EEEEEE;
     text-align: center;
 }
 
-.label{
+.label {
     color: #EEEEEE;
     margin-top: 20px;
 }
 
-.label_2{
+.label_2 {
     font-size: 11px;
     color: #EEEEEE;
 }
 
-.check{
+.check {
     margin: 0;
     float: left;
-    
+
 }
 
-.other_page{
+.other_page {
     float: left;
     text-decoration: none;
     color: #EEEEEE;
@@ -56,26 +57,26 @@ h1{
     margin-top: 40px;
 }
 
-.other_page:hover{
+.other_page:hover {
     text-decoration: underline;
 }
 
-.submit{
+.submit {
     background-color: #2D4059;
     color: #FF5722;
     border: 2px solid #EEEEEE;
     float: right;
     margin-top: 40px;
     border-radius: 4px;
-    transition-duration:  0.3s;
+    transition-duration: 0.3s;
 }
 
-.submit:hover{
+.submit:hover {
     background-color: #EEEEEE;
     box-shadow: 5px 5px;
 }
 
-.info{
+.info {
     background-color: #2D4059;
     color: #EEEEEE;
     border-bottom-color: #EEEEEE;
@@ -86,8 +87,6 @@ h1{
     outline: none;
 }
 
-
-
-.message{
+.message {
     color: #FF5722;
 }

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../static/css/style4.css">
     <link rel="icon" href="../static/img/logo.png" type="image/icon type">
     <meta name=viewport content='width=300'>
-    <title>Login</title>
+    <title>Register</title>
 </head>
 
 <body>
@@ -45,15 +45,16 @@
             </div>
 
             <div style="margin-top: 20px">
-                
-                {{ form.checkbox (class="check")}} <div class="label_2">{{ form.checkbox.label}}</div>
+
+                {{ form.checkbox (class="check")}}
+                <div class="label_2">{{ form.checkbox.label}}</div>
 
                 {% for error in form.checkbox.errors %}
                 <div class="message" role="alert">
                     {{ error }}
                 </div>
                 {% endfor %}
-                
+
 
             </div>
 
@@ -62,6 +63,4 @@
         </form>
     </div>
 
-</body>
-
-</html>
+</body></html>

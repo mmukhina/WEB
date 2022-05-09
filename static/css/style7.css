@@ -1,4 +1,4 @@
-body{
+body {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -8,17 +8,17 @@ body{
     margin-top: 10px;
 }
 
-table{
+table {
     width: 90%;
     left: 50%;
     position: absolute;
     transform: translate(-50%);
     border-collapse: separate;
     border-spacing: 10px;
-    
+
 }
 
-h1{
+h1 {
     color: #EEEEEE;
     display: inline-block;
     left: 50%;
@@ -28,7 +28,7 @@ h1{
     margin-top: 25px;
 }
 
-th{
+th {
     color: #FF5722;
     background-color: #2D4059;
     padding: 10px;
@@ -37,12 +37,12 @@ th{
     text-align: center;
 }
 
-td{
+td {
     text-align: center;
     color: #EEEEEE;
     background-color: #2D4059;
     padding: 10px;
     border-radius: 4px;
     box-shadow: 0 0 10px black;
-    
+
 }

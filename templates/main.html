@@ -17,11 +17,11 @@
 
     <script>
         $(document).ready(function() {
-            // Enable popovers everywhere
             $('[data-bs-toggle="popover"]').popover({
                 html: true
             });
         });
+
     </script>
 
 </head>
@@ -41,7 +41,7 @@
             var objDiv = document.getElementById("con");
             objDiv.scrollTop = objDiv.scrollHeight;
             var moves = data.split(" ");
-            if (moves[0] == "d" ){
+            if (moves[0] == "d") {
                 document.getElementById(moves[1]).style.backgroundImage = "";
             } else if (moves[0] == "p") {
                 if (moves[2] == "pawnb") {
@@ -85,6 +85,7 @@
             }
 
         })
+
     </script>
 
 
@@ -102,7 +103,7 @@
             <div class="send_bottom">
                 <input id="chat-input" type="text"> <button class="send_btn" onclick="sendMessage()">Отправить</button>
                 <button type="button" class="question" data-bs-toggle="popover" title="<h4>Команды для игры</h4>" data-bs-content="<b>Удалить фишку</b><br>Напишите d, а затем координаты <br> Пример: d A1 <br><br><b>Поставить фишку</b><br>Напишите p, через пробел координату, а затем название фишки и сразу полсле названия букву b или w (черную или белую фишку).<br> Пример: p A1 pawnb<br><br> &#9812 king <br> &#9813 queen <br> &#9814 rook <br> &#9815 bishop <br> &#9816 knight <br> &#9817 pawn">?</button>
-                
+
                 <form method="post" class="end">
                     {{ form.hidden_tag() }}
                     {{ form.end_game (class="send_btn") }}
@@ -280,7 +281,10 @@
             }
 
         }
+
     </script>
 
 
-</body></html>
+</body>
+
+</html>
