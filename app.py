@@ -18,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['SECRET_KEY'] = 'secret_key'
 socketio = SocketIO(app)
-#DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = os.environ['DATABASE_URL']
 
 black_orig = {"A1": "", "A2": "", "A3": "", "A4": "", "A5": "", "A6": "", "A7": "pawnb", "A8": "rookb",
          "B1": "", "B2": "", "B3": "", "B4": "", "B5": "", "B6": "", "B7": "pawnb", "B8": "knightb",
@@ -85,8 +85,6 @@ class Game(FlaskForm):
 # Функция для получения данных из базы
 def database(state, info=None):
     # Пробуем подключиться к базе
-    DATABASE_URL = "postgres://qybkrxdzbfsmnq:4abdee2cf19e5e24290e8b6f813fa91c9fded73e4ac639b3994bd3acf2f77bdb@ec2-3-209-61-239.compute-1.amazonaws.com:5432/dbu1marqhos8n6"
-
     try:
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
@@ -397,5 +395,4 @@ def display_image(filename):
 
 
 if __name__ == "__main__":
-    socketio.run(app, port=8080, host='127.0.0.1')
-    #socketio.run(app)
+    socketio.run(app)
