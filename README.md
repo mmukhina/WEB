@@ -1,6 +1,6 @@
 <h1 align="center">Chess Online</h1>
 
-Создать сайт для игры в шахматы онлайн и отслеживания результатов.
+Создать сайт для игры в шахматы онлайн и отслеживания результатов. <a href="https://chess-online-project.herokuapp.com/">Ссылка на сайт</a>
 <p align="center"><img width="800" src="https://user-images.githubusercontent.com/73754515/167320377-ac1f7837-cf3e-4933-936f-eccc7442d320.png"></p>
 
 <br>
@@ -23,7 +23,7 @@
 <p>Пароль: admin</p>
 
 ## Структура сайта
-
+<p align="center"><img width="800" src="https://user-images.githubusercontent.com/73754515/167708386-be3aa0a3-784b-4794-8c82-ca46e4655a28.png"></p>
 
 ## Заключение
 
