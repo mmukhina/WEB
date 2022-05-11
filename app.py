@@ -192,6 +192,7 @@ def database(state, info=None):
 
     elif state == "error":
         result = "no_in"
+        return result
 
     cur.close()
     conn.close()

@@ -46,13 +46,13 @@
             } else if (moves[0] == "p") {
                 if (moves[2] == "pawnb") {
                     document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/pawn_black.png')";
-                    document.getElementById(i).style.backgroundSize = '100%';
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
                 } else if (moves[2] == "kingb") {
                     document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/king_black.png')";
                     document.getElementById(moves[1]).style.backgroundSize = '100%';
                 } else if (moves[2] == "knightb") {
                     document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/knight_black.png')";
-                    document.getElementById(i).style.backgroundSize = '100%';
+                    document.getElementById(moves[1]).style.backgroundSize = '100%';
                 } else if (moves[2] == "rookb") {
                     document.getElementById(moves[1]).style.backgroundImage = "url('../static/img/pieces/rook_black.png')";
                     document.getElementById(moves[1]).style.backgroundSize = '100%';
@@ -281,6 +281,17 @@
             }
 
         }
+
+    </script>
+
+    <script>
+        document.getElementById('chat-input')
+            .addEventListener('keyup', function(event) {
+                if (event.code === 'Enter') {
+                    event.preventDefault();
+                    sendMessage();
+                }
+            });
 
     </script>
 
